@@ -20,6 +20,7 @@ import com.ubayKyu.accountingSystem.repository.AccountingNoteRepository;
 @Controller
 public class DefaultController {
 	
+	//Session依賴注入
 	@Autowired
 	HttpSession session;
 	
