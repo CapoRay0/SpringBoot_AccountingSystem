@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/Layout.html}">
+<head>
+    
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="text-left">
+	
+		 <h3>會員管理</h3>
+		 管理者後台
+		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+ 		 	<path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+		 </svg>
+		 會員管理
+		 <br /><br />
+		 
+		 <table>
+		 	 <tr valign="top">
+				 <td>帳號&emsp;&emsp;&emsp;</td>
+				 <td>[[${account}]]<br /><br /></td>
+			 </tr>
+			 <tr valign="top">
+				 <td>姓名&emsp;&emsp;&emsp;</td>
+				 <td><input type="text" id="txtName" name="txtName" style="width:300px" th:value="${name}" required ><br /><br /></td>
+			 </tr>
+			 <tr valign="top">
+				 <td>Email&emsp;&emsp;&emsp;</td>
+				 <td><input type="email" id="txtEmail" name="txtEmail" style="width:300px" th:value="${email}" required ><br /><br /></td>
+			 </tr>
+			 <tr valign="top">
+				 <td>等級&emsp;&emsp;&emsp;</td>
+				 <td><select id="ddlLevel" name="ddlLevel">
+				 	 <option value="user">一般會員</option>
+					 <option value="manager">管理者</option>
+				 </select><br /><br /></td>
+			 </tr>
+			 <tr valign="top">
+				 <td>建立時間&emsp;&emsp;&emsp;</td>
+				 <td>[[${createTime}]]<br /><br /></td>
+			 </tr>
+			 <tr valign="top">
+				 <td>修改時間&emsp;&emsp;&emsp;</td>
+				 <td>[[${updateTime}]]<br /><br /></td>
+			 </tr>
+		 </table>
+		 
+		 <br /><br />
+		 
+		 <input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />&emsp;&emsp;
+		 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Delete" id="btnDel" />
+	</div>
+</body>

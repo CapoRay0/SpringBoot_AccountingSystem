@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link th:href="@{css/bootstrap.css}" rel="stylesheet">
+	<script th:src="@{js/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{js/bootstrap.js}"></script>
+    
+	<meta charset="UTF-8" />
+	<title>Default</title>
+	
+	<style type="text/css">
+		#body {
+			margin-top: 50px;
+			margin-left: 50px;
+		}
+	</style>
+	
+	<script th:inline="javascript">
+        var message = /*[[${message}]]*/ "";
+        if(message != null)
+        alert(message);
+	</script>
+	
+</head>
+<body>
+	<form method="post" action="./">
+
+		<div id="body">
+
+			<table>
+				<tr valign="bottom">
+					<td>
+						<h1>流水帳管理系統</h1>
+					</td>
+					<td> &emsp; &emsp; &emsp;<a href="/Login">登入系統</a>
+					</td>
+				</tr>
+			</table>
+			<br />
+			
+			<table>
+				<tr>
+					<td>
+						初次記帳 &emsp; [[${firstAccRecordTime}]]<hr>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						最後記帳 &emsp; [[${lastAccRecordTime}]]<hr>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						記帳數量 &emsp; 共 [[${recordCount}]] 筆<hr>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						會員數 &emsp; &nbsp;&ensp; 共 [[${memberCount}]] 人
+					</td>
+				</tr>
+					
+			</table>
+
+		</div>
+
+	</form>
+</body>
+</html>

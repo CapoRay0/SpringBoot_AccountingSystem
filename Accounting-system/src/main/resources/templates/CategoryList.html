@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/Layout.html}">
+<head>
+    
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+</head>
+<body>
+	<div layout:fragment="content" class="text-left">
+	
+		 <h3>流水帳分類管理</h3>
+		 流水帳紀錄
+		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+ 		 	<path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+		 </svg>
+		 流水帳分類管理
+		 <br /><br />&nbsp;&nbsp;
+		 <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" />&emsp;&emsp;
+		 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />
+		 <br /><br />
+		 
+		 這裡顯示gridview及分頁功能
+		 <table cellspacing="0" cellpadding="4"
+			id="ContentPlaceHolder1_gvAccountingList"
+			style="color: #333333; border-collapse: collapse;">
+			<tr
+				style="color: White; background-color: #507CD1; font-weight: bold;">
+				<th scope="col">建立日期</th>
+				<th scope="col">分類</th>
+				<th scope="col">流水帳數</th>
+				<th scope="col">Act</th>
+			</tr>
+			<tr style="background-color: #EFF3FB;">
+				<td>2021-08-19</td>
+				<td>我的分類1</td>
+				<td>5</td>
+				<td><a
+					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
+				</td>
+			</tr>
+			<tr style="background-color: White;">
+				<td>2021-08-19</td>
+				<td>我的分類1</td>
+				<td>2</td>
+				<td><a
+					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=6">修改</a>
+				</td>
+			</tr>
+		</table>
+		 
+	</div>
+</body>

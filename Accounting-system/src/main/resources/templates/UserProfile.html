@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/Layout.html}">
+<head>
+    
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+</head>
+<body>
+	<div layout:fragment="content" class="text-left">
+	
+		 <h3>目前頁面</h3>
+		 後台資訊
+		 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+ 		 	<path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+		 </svg>
+		 個人資訊
+		 <br /><br />
+		 
+		 <table cellpadding="5" style=" border: 1px solid black; border-collapse: collapse; width:400px;">
+			 <tr>
+				 <td style="border: 1px solid black;">帳號&emsp;&emsp;&emsp;</td>
+				 <td style="border: 1px solid black;">[[${account}]]<br /><br /></td>
+			 </tr>
+			 <tr>
+				 <td style="border: 1px solid black;">姓名&emsp;&emsp;&emsp;</td>
+				 <td valign="middle" style="border: 1px solid black;"><input type="text" id="txtCaption" name="txtCaption" th:value="${caption}" style="width:250px" required ><br /><br /></td>
+			 </tr>
+			 <tr>
+				 <td style="border: 1px solid black;">Email&emsp;&emsp;&emsp;</td>
+				 <td valign="middle" style="border: 1px solid black;"><input type="email" id="txtEmail" name="txtEmail" th:value="${email}" style="width:250px" required ><br /><br /></td>
+			 </tr>
+		 </table>
+		 
+		 <br /><br />
+		 <input type="submit" class="btn btn-outline-dark" name="btnSave" value="存檔" id="btnSave" />
+		 
+		 
+	</div>
+</body>
