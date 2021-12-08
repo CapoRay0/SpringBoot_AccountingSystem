@@ -14,11 +14,11 @@
 	
 	<style type="text/css">
 		#layoutContent {
-			margin-left: 60px;
+			margin-left: 70px;
 		}
 	</style>
 	
-	<script>
+	<script> // 使其無法返回瀏覽器的上一頁
 		function forward() {
 			setTimeout("forward()", 100);
 			history.forward();
@@ -33,9 +33,20 @@
 		//javascript natural templates
         var message = /*[[${message}]]*/ "";
         if(message != null)
-        alert(message);
+        	alert(message); // Alert警告提示訊息
+        
+        $(function () { // 用Session來判斷目前登入身分為使用者/管理者
+	 		//var level = /*[[${level}]]*/ "";
+	 		var test = "[[${session.UserLevel}]]";
+	 		if(test == 0)
+	 			document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/QrlPpw.png";
+	 		else if(test == 1){
+	 			$("#divManager").hide();
+	 			document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/9Nz7Jm.png";
+	 		}
+		});
 	</script>
-	
+
 </head>
 
 <body>
@@ -82,7 +93,7 @@
 					 </svg>&nbsp;<a href="/CategoryList">流水帳分類管理</a>
 				 </td>
 				    
-				<td height="50px" width="1300px">
+				<td height="50px" width="1000px">
 					<nav class="navbar navbar-light" style="background-color: #e3f2fd">
 						<div class="container-fluid">
 						
@@ -93,15 +104,16 @@
 							<!--<a class="navbar-brand">麵包屑</a> -->
 							
 							<form class="d-flex">
-        						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50%; margin-top: 15px; display: inline-block; vertical-align: middle">
+        						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50%; margin-top: 10px; display: inline-block; vertical-align: middle">
 						        
-						        
-						        <button type="button" th:onclick="|window.location.href='/btnLogout'|">
-						        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-									<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-								</svg>
-                           		</button>
-						        
+								<!--<button type="button" th:onclick="|window.location.href='/btnLogout'|"> -->
+								<!--<img th:src="@{user.png}" width="30" height="30"> -->
+								<!--</button> -->
+                           		
+                           		<a href="/btnLogout">
+                           			<img width="45" height="45" id="person">
+                           		</a>
+                           		
        						</form>
 						</div>
 					</nav>

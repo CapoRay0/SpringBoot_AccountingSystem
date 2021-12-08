@@ -28,6 +28,9 @@ public class LoginService
 			boolLogin = true; //登入成功
 			//String userGuid = user.getUserID(); //取得使用者辨識碼
 			session.setAttribute("UserLoginInfo", user); //將 UserID 放進登入Session
+			
+			int userLevel = user.getUserLevel();
+			session.setAttribute("UserLevel", userLevel); //判斷目前登入身分為使用者/管理者
 		}
 		
 		return boolLogin;

@@ -38,6 +38,8 @@ public class LoginController
 		 
 		 if(boolLogin == true)
 		 {
+			 //int level = (int)session.getAttribute("UserLevel");
+			 //redirectAttrs.addFlashAttribute("level", level);
 			 //redirectAttrs.addFlashAttribute("message","登入成功");
 			 return "redirect:/UserProfile"; //重新導向到指定的網址
 		 }
