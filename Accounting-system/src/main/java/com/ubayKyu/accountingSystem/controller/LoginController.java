@@ -18,6 +18,10 @@ public class LoginController
 	@Autowired
 	HttpSession session;
 	
+	@Autowired  //與service層進行互動
+	private LoginService loginService;
+	
+	// Login.html Controller
 	@GetMapping("/Login")
 	public String loginPage(Model model)
 	{
@@ -27,14 +31,11 @@ public class LoginController
 			return "Login";
 	}
 	
-	@Autowired  //與service層進行互動
-	private LoginService loginService;
-	
-	//將輸入值帶入並比對
+	//將輸入值帶入，呼叫service層的方法與資料庫比對
 	@RequestMapping("userLogin")
 	public String getLogin(@RequestParam("account") String account, @RequestParam("pwd") String pwd, Model model, RedirectAttributes redirectAttrs)
 	{
-		 boolean boolLogin=loginService.TryLogin(account, pwd);//呼叫service層的方法
+		 boolean boolLogin=loginService.TryLogin(account, pwd);
 		 
 		 if(boolLogin == true)
 		 {

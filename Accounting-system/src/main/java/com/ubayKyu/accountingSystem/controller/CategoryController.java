@@ -10,11 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.ubayKyu.accountingSystem.service.LoginService;
 
 @Controller
-public class CategoryDetailController {
+public class CategoryController {
 	
 	@Autowired
 	HttpSession session;
 	
+	//CategoryList.html Controller
+	@GetMapping("/CategoryList")
+	public String categoryListPage(Model model) {
+		
+        if(LoginService.CheckLoginSession(session))
+        	return "CategoryList";
+        else
+        	return "redirect:/Login";
+	}
+	
+	//CategoryDetail.html Controller
 	@GetMapping("/CategoryDetail")
 	public String categoryDetailPage(Model model) {
 		model.addAttribute("caption", "你好啊");

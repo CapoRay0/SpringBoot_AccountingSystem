@@ -20,17 +20,17 @@ import com.ubayKyu.accountingSystem.repository.AccountingNoteRepository;
 @Controller
 public class DefaultController {
 	
-	//Session依賴注入
 	@Autowired
-	HttpSession session;
+	HttpSession session; //Session依賴注入
 	
 	@Autowired
-	private UserInfoRepository UserInfoRepository; //找到查找資料庫的方法集
+	private UserInfoRepository UserInfoRepository; //查找UserInfo資料庫的方法集
 	
 	@Autowired
-	private AccountingNoteRepository AccountingNoteRepository;
+	private AccountingNoteRepository AccountingNoteRepository; //查找AccountingNote資料庫的方法集
 	
-	@GetMapping("/Default")
+	// Default.html Controller
+	@GetMapping(value = {"/","/Default"})
 	public String defaultPage(Model model) {
 		
 		//List<AccountingNote> accForDate = AccountingNoteRepository.GetAccOrderbyCreateDate();
@@ -40,11 +40,11 @@ public class DefaultController {
 		String firstDate = "尚無紀錄"; //初次記帳
 		String lastDate = "尚無紀錄"; //最後記帳
 		
-		if(AccountingNoteRepository.GetFirstDate() != null) //如果有資料
-			firstDate = FormatService.FormatDateTime(AccountingNoteRepository.GetFirstDate()); // 丟 LocalDateTime 進去，回傳 Format 後的 String
+		if(AccountingNoteRepository.GetFirstDate() != null) //如果create_date有資料
+			firstDate = FormatService.FormatDateTime(AccountingNoteRepository.GetFirstDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
 		
-		if(AccountingNoteRepository.GetLastDate() != null) //如果有資料
-			lastDate = FormatService.FormatDateTime(AccountingNoteRepository.GetLastDate()); // 丟 LocalDateTime 進去，回傳 Format 後的 String
+		if(AccountingNoteRepository.GetLastDate() != null) //如果create_date有資料
+			lastDate = FormatService.FormatDateTime(AccountingNoteRepository.GetLastDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
 		
         Integer accountCount = AccountingNoteRepository.GetAccountCount(); //記帳數量
 		List<UserInfo> UserInfo = UserInfoRepository.findAll(); //會員數

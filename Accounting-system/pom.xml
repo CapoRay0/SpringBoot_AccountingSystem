@@ -32,7 +32,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
@@ -43,7 +42,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		
 		<dependency>
 		    <groupId>nz.net.ultraq.thymeleaf</groupId>
@@ -64,11 +62,6 @@
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20210307</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.springframework.session</groupId>
-		    <artifactId>spring-session-data-redis</artifactId>
 		</dependency>
 
 	</dependencies>

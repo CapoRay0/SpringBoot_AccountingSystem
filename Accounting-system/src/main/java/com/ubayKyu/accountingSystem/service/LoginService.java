@@ -15,7 +15,7 @@ public class LoginService
 	HttpSession session;
 	
 	@Autowired
-	private UserInfoRepository UserInfoRepository; //找到查找資料庫的方法集
+	private UserInfoRepository UserInfoRepository; //查找UserInfo資料庫的方法集
 	
 	//登入驗證
 	public boolean TryLogin(String inpAccount, String inpPWD)
@@ -26,7 +26,6 @@ public class LoginService
 		if (user != null) //如果帳號與密碼資料庫都有查到
 		{
 			boolLogin = true; //登入成功
-			//String userGuid = user.getUserID(); //取得使用者辨識碼
 			session.setAttribute("UserLoginInfo", user); //將 UserID 放進登入Session
 			
 			int userLevel = user.getUserLevel();

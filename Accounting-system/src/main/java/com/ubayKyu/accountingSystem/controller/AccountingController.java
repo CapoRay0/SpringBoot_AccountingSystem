@@ -10,11 +10,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.ubayKyu.accountingSystem.service.LoginService;
 
 @Controller
-public class AccountingDetailController {
+public class AccountingController {
 
 	@Autowired
 	HttpSession session;
 	
+	// AccountingList.html Controller
+	@GetMapping("/AccountingList")
+	public String accountingListPage(Model model) {
+		model.addAttribute("count", "486");
+		
+		if(LoginService.CheckLoginSession(session))
+			return "AccountingList";
+        else
+        	return "redirect:/Login";
+	}
+	
+	// AccountingDetail.html Controller
 	@GetMapping("/AccountingDetail")
 	public String accountingDetailPage(Model model) {
 		model.addAttribute("money", "1486");
