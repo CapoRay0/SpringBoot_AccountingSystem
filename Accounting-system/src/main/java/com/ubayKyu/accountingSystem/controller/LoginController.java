@@ -25,7 +25,7 @@ public class LoginController
 	@GetMapping("/Login")
 	public String loginPage(Model model)
 	{
-		if(session.getAttribute("UserLoginInfo") != null)
+		if(LoginService.CheckLoginSession(session))
 	        return "redirect:/UserProfile";
 		else
 			return "Login";
@@ -39,9 +39,6 @@ public class LoginController
 		 
 		 if(boolLogin == true)
 		 {
-			 //int level = (int)session.getAttribute("UserLevel");
-			 //redirectAttrs.addFlashAttribute("level", level);
-			 //redirectAttrs.addFlashAttribute("message","登入成功");
 			 return "redirect:/UserProfile"; //重新導向到指定的網址
 		 }
 		 else

@@ -22,7 +22,7 @@ public class LoginService
 	{
 		boolean boolLogin = false;
 		
-		UserInfo user = UserInfoRepository.GetUserForLogin(inpAccount, inpPWD);//進資料庫比對帳號密碼是否正確 (存在)
+		UserInfo user = UserInfoRepository.GetUserInfoForLogin(inpAccount, inpPWD);//進資料庫比對帳號密碼是否正確 (存在)
 		if (user != null) //如果帳號與密碼資料庫都有查到
 		{
 			boolLogin = true; //登入成功
