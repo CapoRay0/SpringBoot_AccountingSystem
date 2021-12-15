@@ -10,24 +10,32 @@ import com.ubayKyu.accountingSystem.repository.UserInfoRepository;
 
 @Service
 public class UserInfoService {
+	
 	@Autowired
 	private UserInfoRepository repository;
 	
+	//找出全部UserInfoRepository
 	public List<UserInfo> getUserInfos(){
 		return repository.findAll();
 	}
-	
-	//test
-	public UserInfo saveUserInfo(UserInfo UserInfo) {
-		return repository.save(UserInfo);
+	//從Repository取得登入驗證
+	public UserInfo getUserInfoForLogin(String acc, String pwd) {
+		return repository.GetUserInfoForLogin(acc, pwd);
 	}
 	
-	public List<UserInfo> getUserInfoById(List<String> ids){
-		return repository.findAllById(ids);
-	}
 	
-	public String deleteUserInfo(String id) {
-		repository.deleteById(id);
-		return "Deleted!";
-	}
+	
+//	//test
+//	public UserInfo saveUserInfo(UserInfo UserInfo) {
+//		return repository.save(UserInfo);
+//	}
+//	
+//	public List<UserInfo> getUserInfoById(List<String> ids){
+//		return repository.findAllById(ids);
+//	}
+//	
+//	public String deleteUserInfo(String id) {
+//		repository.deleteById(id);
+//		return "Deleted!";
+//	}
 }

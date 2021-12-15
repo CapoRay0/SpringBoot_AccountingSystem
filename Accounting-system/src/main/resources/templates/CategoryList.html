@@ -8,47 +8,53 @@
 	<meta charset="UTF-8">
 	<title>CategoryList</title>
 	
+	<script> //js => TablePage換頁功能
+		 $(function () { 
+		     $("#tbCategory").tablepage($("#pager"), 10);
+		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		 });
+	</script>
+	 
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-	
-		 <h3>流水帳分類管理</h3>
-		 <a href="/CategoryList">流水帳紀錄</a>
-		 <img th:src="@{/arrow.png}" width="16" height="16">
-		 流水帳分類管理
-		 <br /><br />&nbsp;&nbsp;
-		 <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" />&emsp;&emsp;
-		 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />
-		 <br /><br />
-		 
-		 這裡顯示gridview及分頁功能
-		 <table cellspacing="0" cellpadding="4"
-			id="ContentPlaceHolder1_gvAccountingList"
-			style="color: #333333; border-collapse: collapse;">
-			<tr
-				style="color: White; background-color: #507CD1; font-weight: bold;">
-				<th scope="col">建立日期</th>
-				<th scope="col">分類</th>
-				<th scope="col">流水帳數</th>
-				<th scope="col">Act</th>
-			</tr>
-			<tr style="background-color: #EFF3FB;">
-				<td>2021-08-19</td>
-				<td>我的分類1</td>
-				<td>5</td>
-				<td><a
-					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
-				</td>
-			</tr>
-			<tr style="background-color: White;">
-				<td>2021-08-19</td>
-				<td>我的分類1</td>
-				<td>2</td>
-				<td><a
-					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=6">修改</a>
-				</td>
-			</tr>
-		</table>
-		 
+		<form method="post" action="#" th:action="@{|CategoryList?id=${session.UserLoginInfo.getUserID()}}" id="form1">
+			 <h3>流水帳分類管理</h3>
+			 <a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a>
+			 <img th:src="@{/arrow.png}" width="16" height="16">
+			 流水帳分類管理
+			 <br /><br />&nbsp;&nbsp;
+			 
+			 <input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
+			 th:onclick="'window.location.href = \'' + @{/CategoryDetail(id=${session.UserLoginInfo.getUserID()})} + '\''"/>
+			 &emsp;&emsp;
+			 
+			 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel"
+			 onclick="return confirm('您確定要刪除已選取項目嗎?   (若流水帳數>0則無法被刪除)')"/>
+
+			 <br /><br />
+			 
+			 <table class="myTable" border="1" cellpadding="6" id="tbCategory"
+				style="color: #333333; border-collapse: collapse;">
+				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
+					<th scope="col"></th>
+					<th scope="col">建立日期</th>
+					<th scope="col">分類</th>
+					<th scope="col">流水帳數</th>
+					<th scope="col">Act</th>
+				</tr>
+				<tr th:each="CategoryInterface:${categoryListTable}">
+					<td style="border-right:1px solid black;">
+						<input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${CategoryInterface.getcategoryid()}>
+					</td>
+					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcreate_date()}">CreateDate</td>
+					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcaption()}">Caption</td>
+					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcount()}">Count</td>
+					<td><a th:href="@{/CategoryDetail(id=${CategoryInterface.getuserid()},categoryID=${CategoryInterface.getcategoryid()})}">Edit</a></td>
+				</tr>
+			</table>
+			<br><br>
+			<span id="pager"></span>
+		 </form>
 	</div>
 </body>

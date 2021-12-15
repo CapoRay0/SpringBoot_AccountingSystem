@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ubayKyu.accountingSystem.entity.UserInfo;
-import com.ubayKyu.accountingSystem.repository.UserInfoRepository;
 import com.ubayKyu.accountingSystem.service.FormatService;
 import com.ubayKyu.accountingSystem.service.LoginService;
-import com.ubayKyu.accountingSystem.repository.AccountingNoteRepository;
+import com.ubayKyu.accountingSystem.service.UserInfoService;
+import com.ubayKyu.accountingSystem.service.AccountingNoteService;
 
 @Controller
 public class DefaultController {
@@ -24,10 +24,10 @@ public class DefaultController {
 	HttpSession session; //Session依賴注入
 	
 	@Autowired
-	private UserInfoRepository UserInfoRepository; //查找UserInfo資料庫的方法集
+	private UserInfoService UserInfoService; //查找UserInfo資料庫的方法集
 	
 	@Autowired
-	private AccountingNoteRepository AccountingNoteRepository; //查找AccountingNote資料庫的方法集
+	private AccountingNoteService AccountingNoteService; //查找AccountingNote資料庫的方法集
 	
 	// Default.html Controller
 	@GetMapping(value = {"/","/Default"})
@@ -40,14 +40,14 @@ public class DefaultController {
 		String firstDate = "尚無紀錄"; //初次記帳
 		String lastDate = "尚無紀錄"; //最後記帳
 		
-		if(AccountingNoteRepository.GetFirstDate() != null) //如果create_date有資料
-			firstDate = FormatService.FormatDateTime(AccountingNoteRepository.GetFirstDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
+		if(AccountingNoteService.getFirstDate() != null) //如果create_date有資料
+			firstDate = FormatService.FormatDateTime(AccountingNoteService.getFirstDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
 		
-		if(AccountingNoteRepository.GetLastDate() != null) //如果create_date有資料
-			lastDate = FormatService.FormatDateTime(AccountingNoteRepository.GetLastDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
+		if(AccountingNoteService.getLastDate() != null) //如果create_date有資料
+			lastDate = FormatService.FormatDateTime(AccountingNoteService.getLastDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
 		
-        Integer accountCount = AccountingNoteRepository.GetAccountCount(); //記帳數量
-		List<UserInfo> UserInfo = UserInfoRepository.findAll(); //會員數
+        Integer accountCount = AccountingNoteService.getAccountCount(); //記帳數量
+		List<UserInfo> UserInfo = UserInfoService.getUserInfos(); //會員數
 		
 		//UserInfo za = UserInfoRepository.zxc("叡ray");
 		//String asd = za.getName();

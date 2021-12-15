@@ -33,7 +33,10 @@ public class LoginController
 	
 	//將輸入值帶入，呼叫service層的方法與資料庫比對
 	@RequestMapping("userLogin")
-	public String getLogin(@RequestParam("account") String account, @RequestParam("pwd") String pwd, Model model, RedirectAttributes redirectAttrs)
+	public String getLogin(Model model, 
+						   @RequestParam("account") String account, 
+						   @RequestParam("pwd") String pwd, 
+						   RedirectAttributes redirectAttrs)
 	{
 		 boolean boolLogin=loginService.TryLogin(account, pwd);
 		 
