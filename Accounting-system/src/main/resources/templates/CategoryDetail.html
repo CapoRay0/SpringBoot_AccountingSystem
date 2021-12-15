@@ -11,10 +11,9 @@
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-<!-- 	<form method="post" action="#" th:action="@{|CategoryDetail?id=${session.UserLoginInfo.getUserID()}}" id="form1"> -->
 		<form method="post" action="" id="form1">
 		 <h3>流水帳分類管理</h3>
-		 <a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a>
+		 <a href="/CategoryList">流水帳紀錄</a>
 		 <img th:src="@{/arrow.png}" width="16" height="16">
 		 流水帳分類管理
 		 <br /><br />
@@ -22,7 +21,7 @@
 		 <table>
 			 <tr valign="top">
 				 <td>標題&emsp;&emsp;&emsp;</td>
-				 <td><input type="text" id="txtCaption" name="txtCaption" th:value="${caption}" style="width:300px" MaxLength="20" placeholder="請輸入標題" required><br /><br /></td>
+				 <td><input type="text" id="txtCaption" name="txtCaption" th:value="${caption}" style="width:300px" MaxLength="20" placeholder="請輸入標題(最多20字)" required><br /><br /></td>
 			 </tr>
 			 <tr valign="top">
 			 	<td>備註&emsp;&emsp;&emsp;</td>

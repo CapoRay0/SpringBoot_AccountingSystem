@@ -1,19 +1,15 @@
 package com.ubayKyu.accountingSystem.repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ubayKyu.accountingSystem.entity.AccountingNote;
 
 @Repository
 public interface AccountingNoteRepository extends JpaRepository<AccountingNote, Integer>{
-	
-	List<AccountingNote> findAll();
 	
 	/*---------------------------Default.html---------------------------*/
 	//初次記帳

@@ -36,8 +36,8 @@ public class LoginController
 	public String getLogin(Model model, 
 						   @RequestParam("account") String account, 
 						   @RequestParam("pwd") String pwd, 
-						   RedirectAttributes redirectAttrs)
-	{
+						   RedirectAttributes redirectAttrs) {
+		
 		 boolean boolLogin=loginService.TryLogin(account, pwd);
 		 
 		 if(boolLogin == true)

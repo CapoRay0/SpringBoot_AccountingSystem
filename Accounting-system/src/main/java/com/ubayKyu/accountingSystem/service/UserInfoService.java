@@ -14,12 +14,12 @@ public class UserInfoService {
 	@Autowired
 	private UserInfoRepository repository;
 	
-	//找出全部UserInfoRepository
+	//找出全部UserInfoRepository >> Default.html的會員數將以 UserInfo.size(); 來查詢
 	public List<UserInfo> getUserInfos(){
 		return repository.findAll();
 	}
 	//從Repository取得登入驗證
-	public UserInfo getUserInfoForLogin(String acc, String pwd) {
+	public UserInfo getUserInfo(String acc, String pwd) {
 		return repository.GetUserInfoForLogin(acc, pwd);
 	}
 	

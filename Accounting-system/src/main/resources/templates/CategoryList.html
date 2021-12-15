@@ -18,15 +18,17 @@
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-		<form method="post" action="#" th:action="@{|CategoryList?id=${session.UserLoginInfo.getUserID()}}" id="form1">
+		<form method="post" action="#" th:action="@{/CategoryList}" id="form1">
 			 <h3>流水帳分類管理</h3>
-			 <a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a>
+<!-- 		 <a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a> -->
+			 <a href="/CategoryList">流水帳紀錄</a>
 			 <img th:src="@{/arrow.png}" width="16" height="16">
 			 流水帳分類管理
 			 <br /><br />&nbsp;&nbsp;
 			 
 			 <input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
-			 th:onclick="'window.location.href = \'' + @{/CategoryDetail(id=${session.UserLoginInfo.getUserID()})} + '\''"/>
+			 onclick="window.location.href='/CategoryDetail'"/>
+<!-- 		 th:onclick="'window.location.href = \'' + @{/CategoryDetail} + '\''"/> -->
 			 &emsp;&emsp;
 			 
 			 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel"
@@ -50,7 +52,7 @@
 					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcreate_date()}">CreateDate</td>
 					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcaption()}">Caption</td>
 					<td style="border-right:1px solid black;" th:text="${CategoryInterface.getcount()}">Count</td>
-					<td><a th:href="@{/CategoryDetail(id=${CategoryInterface.getuserid()},categoryID=${CategoryInterface.getcategoryid()})}">Edit</a></td>
+					<td><a th:href="@{/CategoryDetail(categoryID=${CategoryInterface.getcategoryid()})}">Edit</a></td>
 				</tr>
 			</table>
 			<br><br>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ubayKyu.accountingSystem.dto.CategoryInterface;
 import com.ubayKyu.accountingSystem.entity.Category;
+import com.ubayKyu.accountingSystem.entity.UserInfo;
 import com.ubayKyu.accountingSystem.service.LoginService;
 import com.ubayKyu.accountingSystem.service.CategoryService;
 
@@ -31,25 +32,30 @@ public class CategoryController {
 	
 	//CategoryList.html Controller Get
 	@GetMapping("/CategoryList")
-	public String categoryListPage(Model model, 
-								   @RequestParam(value="id") String userID) {
+	public String categoryListPage(Model model) {
+		
+		if(!LoginService.CheckLoginSession(session))
+			return "redirect:/Login";
+		
+		//取得登入者的UserID
+		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
+		String userID = user.getUserID();
 		
 		//於html使用th:each將Category的List加入table中印出分類列表
 		List<CategoryInterface> categoryList = CategoryService.getCategoryInterfaceListByUserID(userID);
 		model.addAttribute("categoryListTable",categoryList);
 		
-        if(LoginService.CheckLoginSession(session))
-        	return "CategoryList";
-        else
-        	return "redirect:/Login";
+		return "CategoryList";
 	}
 	
 	//CategoryList.html Controller Post >> Delete
 	@PostMapping("/CategoryList")
     public String CategoryListDel(Model model, 
-    							  @RequestParam(value="id") String userID,
     							  @RequestParam(value ="ckbDelete", required = false) String[] categoryIDsForDel,
     							  RedirectAttributes redirectAttrs) {
+		
+		if(!LoginService.CheckLoginSession(session))
+			return "redirect:/Login";
 		
 		if(categoryIDsForDel != null) { //如果CheckBox有被勾選
 			for(String eachCategory : categoryIDsForDel) { //Java的foreach寫法，跑categoryDel陣列中的每個eachCategory
@@ -62,10 +68,7 @@ public class CategoryController {
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
-		if(LoginService.CheckLoginSession(session))
-        	return "redirect:/CategoryList?id=" + userID;
-        else
-        	return "redirect:/Login";
+		return "redirect:/CategoryList";
     }
 	
 	/*--------------------------CategoryDetail.html--------------------------*/
@@ -73,8 +76,11 @@ public class CategoryController {
 	//CategoryDetail.html Controller Get
 	@GetMapping("/CategoryDetail")
 	public String categoryDetailPage(Model model, 
-									 @RequestParam(value="id") String userID, 
 									 @RequestParam(value="categoryID", required = false) String categoryID) {
+		
+		if(!LoginService.CheckLoginSession(session))
+	    	return "redirect:/Login";
+		
 		//帶出標題與備註內容
 		if(categoryID != null) {
 			Optional<Category> categoryForEdit = CategoryService.findById(categoryID);
@@ -83,57 +89,50 @@ public class CategoryController {
 				model.addAttribute("body", categoryForEdit.get().getBody());
 		}
 		
-	    if(LoginService.CheckLoginSession(session))
-	        return "CategoryDetail";
-	    else
-	        return "redirect:/Login";
+	    return "CategoryDetail";
 	}
 
 	//CategoryDetail.html Controller Post >> CreateOrUpdate
 	@PostMapping("/CategoryDetail")
 	public String categoryDetailPage(Model model, 
-//									 HttpServletRequest request, 
-									 @RequestParam(value="id") String userID, 
+								   //HttpServletRequest request, 
 									 @RequestParam(value="categoryID", required = false) String categoryID, 
 									 @RequestParam(value="txtCaption", required = false) String txtCaption, 
 									 @RequestParam(value="txtBody", required = false) String txtBody,
 									 RedirectAttributes redirectAttrs) {
-		//直接從網址上抓下來的方法
-//		String categoryID = request.getParameter("categoryID");
-//		String userID = request.getParameter("id");
 		
-//		System.out.println(categoryID);
-//		System.out.println(userID);
-//		System.out.println(txtCaption);
-//		System.out.println(txtBody);
-		
-		// 檢查是否登入
         if(!LoginService.CheckLoginSession(session))
         	return "redirect:/Login";
         
-        // 檢查標題有無重複
+//		直接從網址上抓下來的方法 >> HttpServletRequest
+//		String categoryID = request.getParameter("categoryID");
+		
+        //取得登入者的UserID
+        UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
+		String userID = user.getUserID();
+        
+        //檢查標題有無重複
         if(CategoryService.IsCategoryCaptionExist(userID, txtCaption, categoryID))
         {
              redirectAttrs.addFlashAttribute("message", "此分類標題已經存在，請更換標題內容");
              if(categoryID == null)
-            	 return "redirect:/CategoryDetail?id=" + userID; // 新增
+            	 return "redirect:/CategoryDetail"; // 新增
              else
-            	 return "redirect:/CategoryDetail?id=" + userID +"&categoryID=" + categoryID;  // 編輯
+            	 return "redirect:/CategoryDetail?categoryID=" + categoryID;  // 編輯
         }
         
-        // 若無重複才進行新增或編輯
-        if (categoryID == null) // 新增模式
+        //若無重複才進行新增或編輯
+        if (categoryID == null) //新增模式
 		{
-			String newCategoryID = CategoryService.AddCategory(userID, txtCaption, txtBody);
+			categoryID = CategoryService.AddCategory(userID, txtCaption, txtBody);
 			redirectAttrs.addFlashAttribute("message", "新增成功");
-			return "redirect:/CategoryDetail?id=" + userID + "&categoryID=" + newCategoryID;
 		}
-		else // 編輯模式
+		else //編輯模式
 		{
 			CategoryService.UpdateCategory(categoryID, txtCaption, txtBody);
 			redirectAttrs.addFlashAttribute("message", "編輯成功");
-			return "redirect:/CategoryDetail?id=" + userID + "&categoryID=" + categoryID;
 		}
         
+        return "redirect:/CategoryDetail?categoryID=" + categoryID;
 	}
 }

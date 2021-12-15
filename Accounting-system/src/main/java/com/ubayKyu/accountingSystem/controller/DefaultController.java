@@ -49,9 +49,6 @@ public class DefaultController {
         Integer accountCount = AccountingNoteService.getAccountCount(); //記帳數量
 		List<UserInfo> UserInfo = UserInfoService.getUserInfos(); //會員數
 		
-		//UserInfo za = UserInfoRepository.zxc("叡ray");
-		//String asd = za.getName();
-		
         model.addAttribute("firstAccRecordTime", firstDate);
         model.addAttribute("lastAccRecordTime", lastDate);
         model.addAttribute("recordCount", accountCount);

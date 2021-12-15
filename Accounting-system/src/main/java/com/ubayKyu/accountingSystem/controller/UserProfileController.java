@@ -15,15 +15,17 @@ public class UserProfileController {
 	@Autowired
 	HttpSession session;
 	
+	// UserProfile.html Controller
 	@GetMapping("/UserProfile")
 	public String UserProfilePage(Model model) {
+		
+		if(!LoginService.CheckLoginSession(session))
+        	return "redirect:/Login";
+		
         model.addAttribute("account", "Ray Wu");
         model.addAttribute("caption", "名字");
         model.addAttribute("email", "caporay123@gmail.com");
         
-        if(LoginService.CheckLoginSession(session))
-        	return "UserProfile";
-        else
-        	return "redirect:/Login";
+        return "UserProfile";
 	}
 }

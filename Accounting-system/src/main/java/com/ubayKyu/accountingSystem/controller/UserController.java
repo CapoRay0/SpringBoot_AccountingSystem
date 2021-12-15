@@ -19,24 +19,27 @@ public class UserController {
 	@GetMapping("/UserList")
 	public String userListPage(Model model) {
 		
-		if(LoginService.CheckLoginSession(session))
-			return "UserList";
-        else
-        	return "redirect:/Login";
+		if(!LoginService.CheckLoginSession(session))
+			return "redirect:/Login";
+		
+		
+		
+		return "UserList";	
 	}
 	
 	// UserDetail.html Controller
 	@GetMapping("/UserDetail")
 	public String userDetailPage(Model model) {
+		
+		if(!LoginService.CheckLoginSession(session))
+			return "redirect:/Login";
+		
 		model.addAttribute("account", "CapoRay");
 		model.addAttribute("name", "吳叡");
 		model.addAttribute("email", "caporay132@gmail.com");
 		model.addAttribute("createTime", "2021/8/2 下午 09:24:16");
 		model.addAttribute("updateTime", "2021/8/5 下午 11:52:15");
 		
-		if(LoginService.CheckLoginSession(session))
-			return "UserDetail";
-        else
-        	return "redirect:/Login";
+		return "UserDetail";	
 	}
 }

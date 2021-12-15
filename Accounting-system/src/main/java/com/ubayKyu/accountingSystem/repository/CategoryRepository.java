@@ -13,8 +13,6 @@ import com.ubayKyu.accountingSystem.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, String>{
 	
-	List<Category> findAll();
-	
 	/*---------------------------CategoryList.html---------------------------*/
 	// 取得登入者的分類資訊(Interface)
 	@Query(value = "SELECT C.[categoryid]"
@@ -27,7 +25,7 @@ public interface CategoryRepository extends JpaRepository<Category, String>{
 				+ "	LEFT JOIN [accounting_note] AS A ON A.[categoryid] = C.[categoryid]"
 				+ " WHERE C.[userid] =:userid"
 				+ " GROUP BY C.[categoryid], C.[body], C.[caption], C.[create_date], C.[userid]"
-				+ " ORDER BY [count] DESC"
+				+ " ORDER BY [count] DESC, [create_date] DESC"
 				, nativeQuery = true)
 	List<CategoryInterface> GetCategoryInterfaceListByUserID(@Param("userid") String userid);
 	
