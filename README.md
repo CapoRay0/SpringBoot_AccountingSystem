@@ -1,2 +1,5 @@
 # SpringBoot_AccountingSystem
-EclipseIDE >> Java >> Tomcat伺服器 >> Mavan模型 >> Spring Boot框架 >> Thymeleaf語法
+SQL Server >> EclipseIDE >> JavaEE >> Tomcat Server >> Mavan Model >> Spring Boot Project >> Thymeleaf Template Engine
+
+資料庫 >> 管理者帳密
+admin / 12345678
