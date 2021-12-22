@@ -7,32 +7,37 @@
     
 	<meta charset="UTF-8">
 	<title>AccountingList</title>
-
+	
+	<script> //js => TablePage換頁功能
+		 $(function () { 
+		     $("#tbAccountingNote").tablepage($("#pager"), 10);
+		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		 });
+	</script>
+	
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
 		<form method="post" action="#" th:action="@{/AccountingList}" id="form1">
-			 <h3>流水帳管理</h3>
-			 <a href="/AccountingList">流水帳紀錄</a>
-			 <img th:src="@{/arrow.png}" width="16" height="16">
-			 流水帳管理
-			 <br /><br />&nbsp;&nbsp;
-			 
-			 <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" />&emsp;&emsp;
-			 
-			 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />
-			 
-			 &emsp;&emsp;&emsp;&emsp;&emsp;<label id="lblCount" style="font-size:20px;" >小計 [[${count}]] 元</label>
-			 
-			 <br /><br />
-			 
-			 這裡顯示gridview及分頁功能
-			 
-			<table cellspacing="0" cellpadding="4"
-				id="ContentPlaceHolder1_gvAccountingList"
+			<h3>流水帳管理</h3>
+			<a href="/AccountingList">流水帳紀錄</a>
+			<img th:src="@{/arrow.png}" width="16" height="16">
+			流水帳管理
+			<br /><br />&nbsp;&nbsp;
+			
+			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
+			onclick="window.location.href='/AccountingDetail'"/>&emsp;&emsp;
+			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
+			onclick="return confirm('您確定要刪除已選取項目嗎?')"/>
+			
+			&emsp;&emsp;<label id="lblSumCount" style="font-size:20px;" >總金額小計 [[${amountSum}]] 元，本月小計 [[${amountSumThisMonth}]] 元</label>
+			
+			<br /><br />
+			
+			<table class="myTable" border="1" cellpadding="6" id="tbAccountingNote"
 				style="color: #333333; border-collapse: collapse;">
-				<tr
-					style="color: White; background-color: #507CD1; font-weight: bold;">
+				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
+					<th scope="col"></th>
 					<th scope="col">建立日期</th>
 					<th scope="col">分類</th>
 					<th scope="col">收 / 支</th>
@@ -40,19 +45,24 @@
 					<th scope="col">標題</th>
 					<th scope="col">Act</th>
 				</tr>
-				<tr style="background-color: #EFF3FB;">
-					<td>2021-08-19</td>
-					<td>我的分類1</td>
-					<td><span
-						id="ContentPlaceHolder1_gvAccountingList_lblActType_0"
-						style="color: Blue;">收入</span></td>
-					<td>35456</td>
-					<td>453645645655</td>
-					<td><a
-						href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
+				<tr th:each="AccountingNoteInterface:${accountingNoteListTable}">
+					<td style="border-right:1px solid black;">
+						<input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${AccountingNoteInterface.getaccid()}>
 					</td>
+					<td style="border-right:1px solid black;" th:text="${AccountingNoteInterface.getcreate_date()}">CreateDate</td>
+					<td style="border-right:1px solid black;" th:text="${AccountingNoteInterface.getcategory_caption()}">CategoryCaption</td>
+					<td style="border-right:1px solid black;" th:text="${AccountingNoteInterface.getact_type()} == 1 ? '收入' : '支出'">ActType</td>
+					<td style="border-right:1px solid black;"
+						th:styleappend="${AccountingNoteInterface.getact_type()} == 1 ? 'color:Blue;' : 'color:Red;'"
+						th:text="${AccountingNoteInterface.getact_type()} == 1 ? ${AccountingNoteInterface.getamount()} : '('+ ${AccountingNoteInterface.getamount()} +')'">
+						Amount
+					</td>
+					<td style="border-right:1px solid black;" th:text="${AccountingNoteInterface.getcaption()}">Caption</td>
+					<td><a th:href="@{/AccountingDetail(accID=${AccountingNoteInterface.getaccid()})}">Edit</a></td>
 				</tr>
 			</table>
+			<br /><br />
+			<span id="pager"></span>
 		</form>
 	</div>
 </body>

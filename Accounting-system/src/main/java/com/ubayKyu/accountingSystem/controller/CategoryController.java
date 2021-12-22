@@ -43,7 +43,7 @@ public class CategoryController {
 		
 		//於html使用th:each將Category的List加入table中印出分類列表
 		List<CategoryInterface> categoryList = CategoryService.getCategoryInterfaceListByUserID(userID);
-		model.addAttribute("categoryListTable",categoryList);
+		model.addAttribute("categoryListTable", categoryList);
 		
 		return "CategoryList";
 	}
@@ -62,9 +62,9 @@ public class CategoryController {
 				int count = CategoryService.getCountByCategoryIDForDel(eachCategory);
 				if(count == 0) { //該分類中無流水帳才可刪除
 					CategoryService.deleteById(eachCategory); //內建刪除方法
-					redirectAttrs.addFlashAttribute("message","刪除成功");
 				}
 			}
+			redirectAttrs.addFlashAttribute("message","刪除成功");
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
@@ -81,9 +81,9 @@ public class CategoryController {
 		if(!LoginService.CheckLoginSession(session))
 	    	return "redirect:/Login";
 		
-		//帶出標題與備註內容
+		//編輯模式 >> 帶出標題與備註內容
 		if(categoryID != null) {
-			Optional<Category> categoryForEdit = CategoryService.findById(categoryID);
+			Optional<Category> categoryForEdit = CategoryService.findByCategoryID(categoryID);
 			model.addAttribute("caption", categoryForEdit.get().getCaption());
 			if(categoryForEdit.get().getBody() != null) 
 				model.addAttribute("body", categoryForEdit.get().getBody());
@@ -94,7 +94,7 @@ public class CategoryController {
 
 	//CategoryDetail.html Controller Post >> CreateOrUpdate
 	@PostMapping("/CategoryDetail")
-	public String categoryDetailPage(Model model, 
+	public String categoryDetailCreateOrUpdate(Model model, 
 								   //HttpServletRequest request, 
 									 @RequestParam(value="categoryID", required = false) String categoryID, 
 									 @RequestParam(value="txtCaption", required = false) String txtCaption, 

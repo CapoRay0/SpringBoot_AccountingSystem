@@ -13,9 +13,12 @@ E-Mail：hpw925@hotmail.com
 		var sPageStr = "";
 		var dCount = 0;
 		var oSource = $(this);
-		var sNoSelColor = "#CCCCCC";
-		var sSelColor = "black";
-		var sFontColor = "white";
+		var sNoSelColor = "#EFF3FB";
+		//var sNoSelColor = "#CCCCCC";
+		var sSelColor = "#6594f0";
+		//var sSelColor = "black";
+		var sFontColor = "black";
+		//var sFontColor = "white";
 
  		change_page_content();
 
@@ -25,7 +28,7 @@ E-Mail：hpw925@hotmail.com
 			dCount = oSource.children().children().length - 1;
 
 			//顯示頁碼
-			sPageStr = "<table><tr><td style='height:30px;'><b>第</b></td>";
+			sPageStr = "<table><tr><td style='height:30px;'><b>第&nbsp;</b></td>";
 			
 			dPageIndex = 1;
 			
@@ -33,15 +36,15 @@ E-Mail：hpw925@hotmail.com
 			{
 				if (dNowIndex == dPageIndex)
 				{
-					sPageStr += "<td valign='top'><table style='width:20px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table style='width:25px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sSelColor + ";background-color:" + sSelColor + "'><tr><th>" + "&nbsp;" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 				else
 				{
-					sPageStr += "<td valign='top'><table style='width:20px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + (dPageIndex++) + "</th></tr></table></td>";
+					sPageStr += "<td valign='top'><table style='width:25px;height:20px;cursor:pointer;color:" + sFontColor + ";border-collapse:collapse;border-style:solid;border-width:1px;border-color:" + sNoSelColor + ";background-color:" + sNoSelColor + "'><tr><th>" + "&nbsp;" + (dPageIndex++) + "</th></tr></table></td>";
 				}
 			}
 			
-			sPageStr += "<td><b>頁</b></td></tr></table>";
+			sPageStr += "<td><b>&nbsp;頁</b></td></tr></table>";
 			
 			oObj.html(sPageStr);
 			

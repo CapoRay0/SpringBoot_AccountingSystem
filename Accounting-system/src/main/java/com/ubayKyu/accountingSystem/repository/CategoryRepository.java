@@ -14,6 +14,7 @@ import com.ubayKyu.accountingSystem.entity.Category;
 public interface CategoryRepository extends JpaRepository<Category, String>{
 	
 	/*---------------------------CategoryList.html---------------------------*/
+	
 	// 取得登入者的分類資訊(Interface)
 	@Query(value = "SELECT C.[categoryid]"
 				+ " 	,C.[body]"
@@ -27,7 +28,7 @@ public interface CategoryRepository extends JpaRepository<Category, String>{
 				+ " GROUP BY C.[categoryid], C.[body], C.[caption], C.[create_date], C.[userid]"
 				+ " ORDER BY [count] DESC, [create_date] DESC"
 				, nativeQuery = true)
-	List<CategoryInterface> GetCategoryInterfaceListByUserID(@Param("userid") String userid);
+	 List<CategoryInterface> GetCategoryInterfaceListByUserID(@Param("userid") String userid);
 	
 	// 取得該分類資訊旗下的流水帳數量(count) >> 若為0才可刪除分類
 	@Query(value = "SELECT COUNT(A.categoryid) [count]"
@@ -36,13 +37,21 @@ public interface CategoryRepository extends JpaRepository<Category, String>{
             	+ " WHERE C.[categoryid] =:categoryid"
             	+ " GROUP BY C.[categoryid]"
             	, nativeQuery = true)
-    Integer GetCountByCategoryIDForDel(@Param("categoryid") String categoryid);
+     Integer GetCountByCategoryIDForDel(@Param("categoryid") String categoryid);
 	
 	// 檢查是否有重複的標題
 	@Query(value = "SELECT COUNT(*) [count]"
             	+ " FROM [category]"
             	+ " WHERE [userid] =:userid AND [caption] =:caption"
             	, nativeQuery = true)
-    int IsCategoryCaptionExistFindByCaptionAndUserID(@Param("userid") String userid, @Param("caption") String caption);
-	/*-----------------------------------------------------------------------*/
+     int IsCategoryCaptionExistFindByCaptionAndUserID(@Param("userid") String userid, @Param("caption") String caption);
+	
+	/*------------------------AccountingDetail.html--------------------------*/
+	
+	// 顯示出AccountingDetail中的分類下拉選單
+	@Query(value = "SELECT *"
+            	+ " FROM [category]"
+            	+ " WHERE [userid] =:userid"
+            	, nativeQuery = true)
+     List<Category> GetCategoryByUserID(@Param("userid") String userid);
 }
