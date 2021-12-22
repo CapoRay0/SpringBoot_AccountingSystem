@@ -29,7 +29,7 @@ public class DefaultController {
 	@Autowired
 	private AccountingNoteService AccountingNoteService; //查找AccountingNote資料庫的方法集
 	
-	// Default.html Controller
+	// Default.html Controller Get
 	@GetMapping(value = {"/","/Default"})
 	public String defaultPage(Model model) {
 		

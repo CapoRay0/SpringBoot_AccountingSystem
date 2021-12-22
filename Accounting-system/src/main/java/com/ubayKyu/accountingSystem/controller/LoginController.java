@@ -23,8 +23,7 @@ public class LoginController
 	
 	// Login.html Controller
 	@GetMapping("/Login")
-	public String loginPage(Model model)
-	{
+	public String loginPage(Model model) {
 		if(LoginService.CheckLoginSession(session))
 	        return "redirect:/UserProfile";
 		else
