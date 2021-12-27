@@ -131,12 +131,14 @@ public class AccountingController {
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
-		if(txtAmount.isEmpty() || txtAmount == null)
-            message += "金額不可為空\r\n";
+		if(txtAmount.isEmpty() || txtAmount == null) {
+			message = "金額不可為空\r\n";
+			txtAmount = "0";
+		}
 		
 		Integer amount = Integer.parseInt(txtAmount);
-		if(amount > 10000000 || amount < 0) 
-			message += "輸入金額不可超過一千萬\r\n";
+		if(amount > 10000000 || amount < 0)
+			message = "輸入金額不可超過一千萬\r\n";
 		
 		if(txtCaption.isEmpty() || txtCaption == null)
         	message += "標題不可為空\r\n";
