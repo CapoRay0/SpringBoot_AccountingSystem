@@ -7,55 +7,57 @@
     
 	<meta charset="UTF-8">
 	<title>UserList</title>
-
+	
+	<script> //js => TablePage換頁功能
+		 $(function () { 
+		     $("#tbUserInfo").tablepage($("#pager"), 10);
+		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		 });
+	</script>
+	
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-	
-		 <h3>會員管理</h3>
-		 <a href="/UserList">管理者後台</a>
-		 <img th:src="@{/arrow.png}" width="16" height="16">
-		 會員管理
-		 <br /><br />&nbsp;&nbsp;
-		 <input type="submit" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" />&emsp;&emsp;
-		 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" />
-		 <br /><br />
-		 
-		 這裡顯示gridview及分頁功能
-		 
-		 <table id="ContentPlaceHolder1_gvAccountingList"
-			style="color: #333333; border-collapse: collapse;">
-			<tr
-				style="color: White; background-color: #507CD1; font-weight: bold;">
-				<th scope="col">帳號</th>
-				<th scope="col">姓名</th>
-				<th scope="col">Email</th>
-				<th scope="col">等級</th>
-				<th scope="col">建立時間</th>
-				<th scope="col">Act</th>
-			</tr>
-			<tr style="background-color: #EFF3FB;">
-				<td>Caporay5566</td>
-				<td>我的名字</td>
-				<td>ray12313@gmail.com</td>
-				<td>一般會員</td>
-				<td>2021-08-19</td>
-				<td><a
-					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
-				</td>
-			</tr>
-			<tr style="background-color: White;">
-				<td>hello</td>
-				<td>王大明</td>
-				<td>wang123123@gmail.com</td>
-				<td>管理員</td>
-				<td>2021-08-19</td>
-				<td><a
-					href="/SystemAdmin/AccountingRecord/AccountingDetail.aspx?ID=5">修改</a>
-				</td>
-			</tr>
-			
-		</table>
 		
+		<h3>會員管理</h3>
+		<a href="/UserList">管理者後台</a>
+		<img th:src="@{/arrow.png}" width="16" height="16">
+		會員管理
+		<br /><br />
+			 
+		<form method="post" action="#" th:action="@{/UserList}" id="form1">
+			&nbsp;&nbsp;
+			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
+			onclick="window.location.href='/UserDetail'"/>&emsp;&emsp;
+			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
+			onclick="return confirm('您確定要刪除已選取項目嗎?')"/>
+			<br /><br />
+			 
+			<table class="myTable" border="1" cellpadding="6" id="tbUserInfo"
+				style="color: #333333; border-collapse: collapse;">
+				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
+					<th scope="col"></th>
+					<th scope="col">帳號</th>
+					<th scope="col">姓名</th>
+					<th scope="col">Email</th>
+					<th scope="col">等級</th>
+					<th scope="col">建立時間</th>
+					<th scope="col">Act</th>
+				</tr>
+				<tr th:each="UserInfoInterface:${userInfoListTable}">
+					<td style="border-right:1px solid black;">
+						<input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${UserInfoInterface.getuserid()}>
+					</td>
+					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getaccount()}">Account</td>
+					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getname()}">Name</td>
+					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getemail()}">Email</td>
+					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getuser_level()} == 0 ? '管理員' : '一般會員'">UserLevel</td>
+					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getcreate_date()}">CreateDate</td>
+					<td><a th:href="@{/UserDetail(userID=${UserInfoInterface.getuserid()})}">Edit</a></td>
+				</tr>
+			</table>
+			<br /><br />
+			<span id="pager"></span>
+		</form>
 	</div>
 </body>

@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 //import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -33,6 +32,9 @@ public class UserInfo {
 	
 	@Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
 	private LocalDateTime CreateDate;
+	
+	@Column(name="EditDate", nullable=true, columnDefinition="datetime")
+    private LocalDateTime EditDate;
 
 	
 	public String getUserID() {
@@ -91,10 +93,18 @@ public class UserInfo {
 		CreateDate = createDate;
 	}
 
+	public LocalDateTime getEditDate() {
+		return EditDate;
+	}
+
+	public void setEditDate(LocalDateTime editDate) {
+		EditDate = editDate;
+	}
+
 	@Override
 	public String toString() {
 		return "UserInfo [UserID=" + UserID + ", Account=" + Account + ", PWD=" + PWD + ", Name=" + Name + ", Email="
-				+ Email + ", UserLevel=" + UserLevel + ", CreateDate=" + CreateDate + "]";
+				+ Email + ", UserLevel=" + UserLevel + ", CreateDate=" + CreateDate + ", EditDate=" + EditDate + "]";
 	}
 	
 }
