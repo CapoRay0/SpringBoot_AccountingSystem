@@ -58,13 +58,18 @@ public class CategoryController {
 			return "redirect:/Login";
 		
 		if(categoryIDsForDel != null) { //如果CheckBox有被勾選
+			String isDelete = "";
 			for(String eachCategory : categoryIDsForDel) { //Java的foreach寫法，跑categoryDel陣列中的每個eachCategory
 				int count = CategoryService.getCountByCategoryIDForDel(eachCategory);
 				if(count == 0) { //該分類中無流水帳才可刪除
 					CategoryService.deleteById(eachCategory); //內建刪除方法
+					isDelete = "Delete";
 				}
 			}
-			redirectAttrs.addFlashAttribute("message","刪除成功");
+			if(isDelete.isEmpty())
+				redirectAttrs.addFlashAttribute("message","選取項目尚有流水帳，無法刪除");
+			else
+				redirectAttrs.addFlashAttribute("message","刪除成功");
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
@@ -110,29 +115,36 @@ public class CategoryController {
         //取得登入者的UserID
         UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		String userID = user.getUserID();
+		
+        //前、後台同時進行輸入檢查
+        String message = "";
+        if(txtCaption.isEmpty() || txtCaption == null)
+        	message += "標題不可為空\r\n";
         
-        //檢查標題有無重複
-        if(CategoryService.IsCategoryCaptionExist(userID, txtCaption, categoryID))
-        {
-             redirectAttrs.addFlashAttribute("message", "此分類標題已經存在，請更換標題內容");
-             if(categoryID == null)
-            	 return "redirect:/CategoryDetail"; // 新增
-             else
-            	 return "redirect:/CategoryDetail?categoryID=" + categoryID;  // 編輯
+        if(CategoryService.IsCategoryCaptionExist(userID, txtCaption, categoryID)) //檢查標題有無重複
+        	message += "此分類標題已經存在，請更換標題內容\r\n";
+        
+        if(!message.isEmpty()) {
+        	redirectAttrs.addFlashAttribute("message", message);
+        	if(categoryID == null)
+        		return "redirect:/CategoryDetail"; //新增
+            else
+              	return "redirect:/CategoryDetail?categoryID=" + categoryID;  //編輯
         }
         
         //若無重複才進行新增或編輯
         if (categoryID == null) //新增模式
 		{
 			categoryID = CategoryService.AddCategory(userID, txtCaption, txtBody);
-			redirectAttrs.addFlashAttribute("message", "新增成功");
+			message = "新增成功";
 		}
 		else //編輯模式
 		{
 			CategoryService.UpdateCategory(categoryID, txtCaption, txtBody);
-			redirectAttrs.addFlashAttribute("message", "編輯成功");
+			message = "編輯成功";
 		}
         
+        redirectAttrs.addFlashAttribute("message", message);
         return "redirect:/CategoryDetail?categoryID=" + categoryID;
 	}
 }

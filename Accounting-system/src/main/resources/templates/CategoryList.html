@@ -18,25 +18,27 @@
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
+		
+		<h3>流水帳分類管理</h3>
+<!-- 	<a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a> -->
+		<a href="/CategoryList">流水帳紀錄</a>
+		<img th:src="@{/arrow.png}" width="16" height="16">
+		流水帳分類管理
+		<br /><br />
+		
 		<form method="post" action="#" th:action="@{/CategoryList}" id="form1">
-			 <h3>流水帳分類管理</h3>
-<!-- 		 <a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a> -->
-			 <a href="/CategoryList">流水帳紀錄</a>
-			 <img th:src="@{/arrow.png}" width="16" height="16">
-			 流水帳分類管理
-			 <br /><br />&nbsp;&nbsp;
+			&nbsp;&nbsp;
+			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
+			onclick="window.location.href='/CategoryDetail'"/>
+<!-- 		th:onclick="'window.location.href = \'' + @{/CategoryDetail} + '\''"/> -->
+			&emsp;&emsp;
 			 
-			 <input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
-			 onclick="window.location.href='/CategoryDetail'"/>
-<!-- 		 th:onclick="'window.location.href = \'' + @{/CategoryDetail} + '\''"/> -->
-			 &emsp;&emsp;
-			 
-			 <input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel"
-			 onclick="return confirm('您確定要刪除已選取項目嗎?   (若流水帳數>0則無法被刪除)')"/>
+			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel"
+			onclick="return confirm('您確定要刪除已選取項目嗎?   (若流水帳數>0則無法被刪除)')"/>
 
-			 <br /><br />
+			<br /><br />
 			 
-			 <table class="myTable" border="1" cellpadding="6" id="tbCategory"
+			<table class="myTable" border="1" cellpadding="6" id="tbCategory"
 				style="color: #333333; border-collapse: collapse;">
 				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
 					<th scope="col"></th>
@@ -57,6 +59,6 @@
 			</table>
 			<br /><br />
 			<span id="pager"></span>
-		 </form>
+		</form>
 	</div>
 </body>

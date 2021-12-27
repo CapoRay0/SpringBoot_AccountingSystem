@@ -100,14 +100,14 @@ public class AccountingController {
 		
 		//編輯模式 >> 帶出收支、金額、標題與備註內容
 		if(accID != null) {
-			Optional<AccountingNote> AccountingNoteForEdit = AccountingNoteService.findById(accID);
-			model.addAttribute("ddlActType", AccountingNoteForEdit.get().getActType()); //透過jQuery傳至html
-			model.addAttribute("ddlCategoryType", AccountingNoteForEdit.get().getCategoryID()); //透過jQuery傳至html
-			model.addAttribute("amount", AccountingNoteForEdit.get().getAmount());
-			model.addAttribute("caption", AccountingNoteForEdit.get().getCaption());
-			if(AccountingNoteForEdit.get().getBody() != null)
-				model.addAttribute("body", AccountingNoteForEdit.get().getBody());
-			model.addAttribute("hiddenDateTime", AccountingNoteForEdit.get().getCreateDate()); //資料庫抓出日期放入前台hidden，讓Post時可以抓到
+			Optional<AccountingNote> accountingNoteForEdit = AccountingNoteService.findById(accID);
+			model.addAttribute("ddlActType", accountingNoteForEdit.get().getActType()); //透過jQuery傳至html
+			model.addAttribute("ddlCategoryType", accountingNoteForEdit.get().getCategoryID()); //透過jQuery傳至html
+			model.addAttribute("amount", accountingNoteForEdit.get().getAmount());
+			model.addAttribute("caption", accountingNoteForEdit.get().getCaption());
+			if(accountingNoteForEdit.get().getBody() != null)
+				model.addAttribute("body", accountingNoteForEdit.get().getBody());
+			model.addAttribute("hiddenDateTime", accountingNoteForEdit.get().getCreateDate()); //資料庫抓出日期放入前台hidden，讓Post時可以抓到
 		}
 		
 		return "AccountingDetail";
@@ -129,16 +129,25 @@ public class AccountingController {
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
 		
-		//後端再次檢查金額
+		//前、後台同時進行輸入檢查
+		String message = "";
+		if(txtAmount.isEmpty() || txtAmount == null)
+            message += "金額不可為空\r\n";
+		
 		Integer amount = Integer.parseInt(txtAmount);
-		if(amount > 10000000 || amount < 0) {
-			redirectAttrs.addFlashAttribute("message", "輸入金額不可超過一千萬");
+		if(amount > 10000000 || amount < 0) 
+			message += "輸入金額不可超過一千萬\r\n";
+		
+		if(txtCaption.isEmpty() || txtCaption == null)
+        	message += "標題不可為空\r\n";
+		
+		if(!message.isEmpty()) {
+			redirectAttrs.addFlashAttribute("message", message);
 			if(accID == null)
 				return "redirect:/AccountingDetail";
 			else
 				return "redirect:/AccountingDetail?accID=" + accID;
 		}
-		
 		
 		//取得登入者的UserID
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -153,7 +162,6 @@ public class AccountingController {
 		newOrUpdateAcc.setBody(txtBody);
 		newOrUpdateAcc.setUserID(userID);
 		
-		String message;
 		if(accID == null) {
 			newOrUpdateAcc.setCreateDate(LocalDateTime.now());
 			message = "新增成功";

@@ -18,13 +18,15 @@
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-		<form method="post" action="#" th:action="@{/AccountingList}" id="form1">
-			<h3>流水帳管理</h3>
-			<a href="/AccountingList">流水帳紀錄</a>
-			<img th:src="@{/arrow.png}" width="16" height="16">
-			流水帳管理
-			<br /><br />&nbsp;&nbsp;
+		
+		<h3>流水帳管理</h3>
+		<a href="/AccountingList">流水帳紀錄</a>
+		<img th:src="@{/arrow.png}" width="16" height="16">
+		流水帳管理
+		<br /><br />
 			
+		<form method="post" action="#" th:action="@{/AccountingList}" id="form1">
+			&nbsp;&nbsp;
 			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
 			onclick="window.location.href='/AccountingDetail'"/>&emsp;&emsp;
 			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
@@ -33,7 +35,6 @@
 			&emsp;&emsp;<label id="lblSumCount" style="font-size:20px;" >總金額小計 [[${amountSum}]] 元，本月小計 [[${amountSumThisMonth}]] 元</label>
 			
 			<br /><br />
-			
 			<table class="myTable" border="1" cellpadding="6" id="tbAccountingNote"
 				style="color: #333333; border-collapse: collapse;">
 				<tr style="color: White; background-color: #507CD1; font-weight: bold;">
