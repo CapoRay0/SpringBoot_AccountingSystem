@@ -79,4 +79,13 @@ public class UserInfoService {
         user.setUserLevel(ddlUserLevel);
         repository.save(user);
     }
+	//檢查此使用者是否為管理員及管理員人數是否低於一人
+    public boolean AdminUserLevelCheck(String userID)
+    {
+        Optional<UserInfo> user = repository.findById(userID);
+        if(user.get().getUserLevel() == 0 && repository.GetAdminUserCount() <= 1)
+            return true;
+        else 
+            return false;
+    }
 }

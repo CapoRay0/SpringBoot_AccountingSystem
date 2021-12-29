@@ -46,7 +46,8 @@
 				</tr>
 				<tr th:each="UserInfoInterface:${userInfoListTable}">
 					<td style="border-right:1px solid black;">
-						<input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${UserInfoInterface.getuserid()}>
+						<input type="checkbox" id="ckbDelete" name="ckbDelete" th:value=${UserInfoInterface.getuserid()}
+						th:styleappend="${UserInfoInterface.getuserid()} == ${session.UserLoginInfo.getUserID()} ? 'display: none;' : ''">
 					</td>
 					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getaccount()}">Account</td>
 					<td style="border-right:1px solid black;" th:text="${UserInfoInterface.getname()}">Name</td>

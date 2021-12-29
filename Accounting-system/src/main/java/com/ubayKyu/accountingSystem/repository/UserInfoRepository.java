@@ -77,4 +77,11 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, String>{
             	+ " WHERE [account] =:account"
             	, nativeQuery = true)
     int GetUserAccountByAccount(@Param("account") String account);
+    
+    //取得當前管理員人數
+    @Query(value = "SELECT COUNT(*)"
+            	+ " FROM [user_info]"
+            	+ " WHERE [user_level] = 0"
+            	, nativeQuery = true)
+    int GetAdminUserCount();
 }

@@ -170,8 +170,13 @@ public class UserController {
         if(txtEmail.isEmpty() || txtEmail == null)
             message += "Email不可為空\r\n";
         
-        if(userID == null && UserInfoService.IsAccountExist(txtAccount)) //新增模式才需檢查是否重複
+        //新增模式時
+        if(userID == null && UserInfoService.IsAccountExist(txtAccount)) //檢查是否重複
             message += "此帳號已被使用\r\n";
+        
+        //編輯模式時
+        if(userID != null && ddlUserLevel == 1 && UserInfoService.AdminUserLevelCheck(userID)) //權限降級時檢查管理員人數
+            message += "管理員人數不能低於一人\r\n";
         
         if(!message.isEmpty()) {
         	redirectAttrs.addFlashAttribute("message", message);
