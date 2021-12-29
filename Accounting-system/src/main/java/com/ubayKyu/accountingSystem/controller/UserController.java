@@ -130,8 +130,10 @@ public class UserController {
 			boolean IsAdminToUser = false;
 			IsAdminToUser = (boolean)session.getAttribute("AdminToUser");
 			redirectAttrs.addFlashAttribute("message", "您的權限不足，無法訪問該頁面\r\n");
-			if(IsAdminToUser == true)
+			if(IsAdminToUser) {
 				redirectAttrs.addFlashAttribute("message", "已降級為一般會員\r\n");
+				session.setAttribute("AdminToUser", false);
+			}
 			return "redirect:/UserProfile";
 		}
 		
