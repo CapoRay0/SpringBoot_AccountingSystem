@@ -127,7 +127,11 @@ public class UserController {
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		Integer userLevel = user.getUserLevel();
 		if(userLevel > 0) {
-			redirectAttrs.addFlashAttribute("message", "您的權限不足，無法訪問該頁面");
+			boolean IsAdminToUser = false;
+			IsAdminToUser = (boolean)session.getAttribute("AdminToUser");
+			redirectAttrs.addFlashAttribute("message", "您的權限不足，無法訪問該頁面\r\n");
+			if(IsAdminToUser == true)
+				redirectAttrs.addFlashAttribute("message", "已降級為一般會員\r\n");
 			return "redirect:/UserProfile";
 		}
 		
@@ -177,6 +181,12 @@ public class UserController {
         //編輯模式時
         if(userID != null && ddlUserLevel == 1 && UserInfoService.AdminUserLevelCheck(userID)) //權限降級時檢查管理員人數
             message += "管理員人數不能低於一人\r\n";
+        
+        //自己降級
+        UserInfo userFromSession = (UserInfo)session.getAttribute("UserLoginInfo");
+		String userIDFromSession = userFromSession.getUserID();
+		if(userID != null && userID.equals(userIDFromSession) && ddlUserLevel == 1)
+			session.setAttribute("AdminToUser", true);
         
         if(!message.isEmpty()) {
         	redirectAttrs.addFlashAttribute("message", message);
