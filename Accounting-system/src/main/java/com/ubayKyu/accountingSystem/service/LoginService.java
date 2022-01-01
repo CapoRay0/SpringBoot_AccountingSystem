@@ -24,6 +24,7 @@ public class LoginService
 		if (user != null) { //如果帳號與密碼資料庫都有查到
 			boolLogin = true; //登入成功
 			session.setAttribute("UserLoginInfo", user); //將 UserID 放進登入Session
+			session.setAttribute("AdminToUser", false);
 		}
 		
 		return boolLogin;
@@ -31,6 +32,7 @@ public class LoginService
 	//清除登入Session
 	public static void RemoveLoginSession(HttpSession session) {
 		session.removeAttribute("UserLoginInfo");
+		session.removeAttribute("AdminToUser");
 	}
 	//檢查登入Session是否為空值
 	public static boolean CheckLoginSession(HttpSession session) {
