@@ -1,0 +1,156 @@
+USE [master]
+GO
+/****** Object:  Database [AccountingNote]    Script Date: 2022/1/2 下午 01:11:00 ******/
+CREATE DATABASE [AccountingNote]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'AccountingNote', FILENAME = N'F:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\AccountingNote.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'AccountingNote_log', FILENAME = N'F:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\AccountingNote_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [AccountingNote] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [AccountingNote].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [AccountingNote] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [AccountingNote] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [AccountingNote] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [AccountingNote] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [AccountingNote] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [AccountingNote] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [AccountingNote] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [AccountingNote] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [AccountingNote] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [AccountingNote] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [AccountingNote] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [AccountingNote] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [AccountingNote] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [AccountingNote] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [AccountingNote] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [AccountingNote] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [AccountingNote] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [AccountingNote] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [AccountingNote] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [AccountingNote] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [AccountingNote] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [AccountingNote] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [AccountingNote] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [AccountingNote] SET  MULTI_USER 
+GO
+ALTER DATABASE [AccountingNote] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [AccountingNote] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [AccountingNote] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [AccountingNote] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [AccountingNote] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [AccountingNote] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [AccountingNote] SET QUERY_STORE = OFF
+GO
+USE [AccountingNote]
+GO
+/****** Object:  User [test123]    Script Date: 2022/1/2 下午 01:11:00 ******/
+CREATE USER [test123] FOR LOGIN [test123] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [test123]
+GO
+/****** Object:  Table [dbo].[accounting_note]    Script Date: 2022/1/2 下午 01:11:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[accounting_note](
+	[accid] [int] IDENTITY(1,1) NOT NULL,
+	[act_type] [int] NOT NULL,
+	[amount] [int] NOT NULL,
+	[body] [nvarchar](500) NULL,
+	[caption] [nvarchar](100) NULL,
+	[categoryid] [uniqueidentifier] NULL,
+	[create_date] [datetime] NOT NULL,
+	[userid] [uniqueidentifier] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[accid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[category]    Script Date: 2022/1/2 下午 01:11:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[category](
+	[categoryid] [uniqueidentifier] NOT NULL,
+	[body] [nvarchar](500) NULL,
+	[caption] [nvarchar](100) NOT NULL,
+	[create_date] [datetime] NOT NULL,
+	[userid] [uniqueidentifier] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[categoryid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_info]    Script Date: 2022/1/2 下午 01:11:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_info](
+	[userid] [uniqueidentifier] NOT NULL,
+	[account] [varchar](50) NOT NULL,
+	[create_date] [datetime] NOT NULL,
+	[edit_date] [datetime] NULL,
+	[email] [nvarchar](100) NOT NULL,
+	[name] [nvarchar](50) NOT NULL,
+	[pwd] [varchar](50) NOT NULL,
+	[user_level] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[userid] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[user_info] ([userid], [account], [create_date], [edit_date], [email], [name], [pwd], [user_level]) VALUES (N'0ac388d4-fda6-4fb3-8ea5-5de380be8600', N'admin', CAST(N'2021-12-28T09:46:52.000' AS DateTime), CAST(N'2022-01-01T14:21:08.927' AS DateTime), N'admin@gmail.com', N'管理員', N'12345678', 0)
+GO
+ALTER TABLE [dbo].[accounting_note] ADD  DEFAULT (getdate()) FOR [create_date]
+GO
+ALTER TABLE [dbo].[category] ADD  DEFAULT (getdate()) FOR [create_date]
+GO
+ALTER TABLE [dbo].[user_info] ADD  DEFAULT (getdate()) FOR [create_date]
+GO
+USE [master]
+GO
+ALTER DATABASE [AccountingNote] SET  READ_WRITE 
+GO
