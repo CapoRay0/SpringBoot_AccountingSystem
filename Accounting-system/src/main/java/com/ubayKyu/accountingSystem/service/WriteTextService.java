@@ -16,11 +16,14 @@ public class WriteTextService {
 
 	public void writeToText(String messageString) throws IOException {
 		
-		File path = new File(ResourceUtils.getURL("classpath:").getPath());
-		File file = new File(path.getAbsolutePath(),"static/Log.log"); //C:\Users\Admin\git\SpringBoot_AccountingSystem\Accounting-system\target\classes\static\Log.log
+		//File path = new File(ResourceUtils.getURL("classpath:").getPath());
+		//File file = new File(path.getAbsolutePath(),"static/Log.log"); //C:\Users\Admin\git\SpringBoot_AccountingSystem\Accounting-system\target\classes\static\Log.log
+		
+		String path = System.getProperty("user.dir");//當前專案路徑
+        path += "/Log.log";
 		
 //		String path = "C:\\Logs\\Log.log";
-//		File file = new File(path);
+		File file = new File(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
 		}

@@ -84,7 +84,7 @@ public class UserController {
 				Optional<UserInfo> userInfoToDel = UserInfoService.findByUserID(eachUserID);
 				String name = userInfoToDel.get().getName();
 				
-				//寫入 Log.log 中 >> Accounting-system\target\classes\static\Log.log
+				//寫入 Log.log 中 >> Accounting-system\Log.log
 				try {
 					WriteTextService.writeToText("管理者 " + currentName + " 於 " + LocalDate.now() + " 刪除使用者 " + name);
 				} catch (IOException e) {
