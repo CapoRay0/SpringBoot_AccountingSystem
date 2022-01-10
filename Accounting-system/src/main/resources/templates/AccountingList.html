@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/Layout.html}">
 <head>
-    
+	
 	<meta charset="UTF-8">
 	<title>AccountingList</title>
 	
 	<script> //js => TablePage換頁功能
-		 $(function () { 
-		     $("#tbAccountingNote").tablepage($("#pager"), 10);
-		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
-		 });
+		$(function () { 
+			$("#tbAccountingNote").tablepage($("#pager"), 10);
+			//$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		});
 	</script>
 	
 </head>
@@ -24,8 +24,8 @@
 		<img th:src="@{/arrow.png}" width="16" height="16">
 		流水帳管理
 		<br /><br />
-			
-		<form method="post" action="#" th:action="@{/AccountingList}" id="form1">
+		
+		<form method="post" action="#" th:action="@{/AccountingList}">
 			&nbsp;&nbsp;
 			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
 			onclick="window.location.href='/AccountingDetail'"/>&emsp;&emsp;

@@ -35,14 +35,14 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, String>{
 	//取得會員資訊(Interface)
 	@Query(value = "SELECT [userid]"
 				+ " 	,[account]"
-	 			+ "    	,FORMAT([create_date], 'yyyy/MM/dd hh:mm') AS [create_date]"
-	 			+ "    	,[email]"
-	 			+ "    	,[name]"
-	 			+ "    	,[user_level]"
-	 			+ "	FROM [user_info]"
-	 			+ "	ORDER BY [create_date] DESC"
-	 			, nativeQuery = true)
-	 List<UserInfoInterface> GetUserInfoInterface();
+				+ "    	,FORMAT([create_date], 'yyyy/MM/dd hh:mm') AS [create_date]"
+				+ "    	,[email]"
+				+ "    	,[name]"
+				+ "    	,[user_level]"
+				+ "	FROM [user_info]"
+				+ "	ORDER BY [create_date] DESC"
+				, nativeQuery = true)
+	List<UserInfoInterface> GetUserInfoInterface();
 	
 	//若SQL不回傳則須加上 @Modifying
 	//刪除會員、流水帳及分類資訊
@@ -54,34 +54,34 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, String>{
 				+ "	WHERE [category].[userid] =:userid"
 				+ "	SELECT COUNT(*) FROM [user_info]"
 				, nativeQuery = true)
-	 Integer DeleteUserInfoAccountingNoteAndCategoryByUserID(@Param("userid") String userid);
+	Integer DeleteUserInfoAccountingNoteAndCategoryByUserID(@Param("userid") String userid);
 	
 	/*---------------------------UserDetail.html-----------------------------*/
 	
 	//取得個人資訊以進行編輯
 	@Query(value = "SELECT [userid]"
-            	+ " 	,[account]"
-            	+ " 	,FORMAT([create_date], 'yyyy/MM/dd hh:mm:ss') AS [create_date]"
-            	+ " 	,[email]"
-            	+ " 	,[name]"
-            	+ " 	,[user_level]"
-            	+ " 	,FORMAT([edit_date], 'yyyy/MM/dd hh:mm:ss') AS [edit_date]"
-            	+ " FROM [user_info]"
-            	+ " WHERE [userid] =:userid"
-            	, nativeQuery = true)
-    Optional<UserInfoInterface> GetUserInfoInterfaceByUserID(@Param("userid") String userid);
+				+ " 	,[account]"
+				+ " 	,FORMAT([create_date], 'yyyy/MM/dd hh:mm:ss') AS [create_date]"
+				+ " 	,[email]"
+				+ " 	,[name]"
+				+ " 	,[user_level]"
+				+ " 	,FORMAT([edit_date], 'yyyy/MM/dd hh:mm:ss') AS [edit_date]"
+				+ " FROM [user_info]"
+				+ " WHERE [userid] =:userid"
+				, nativeQuery = true)
+	Optional<UserInfoInterface> GetUserInfoInterfaceByUserID(@Param("userid") String userid);
 	
 	//檢查帳號是否重複
-    @Query(value = "SELECT COUNT(*)"
-            	+ " FROM [user_info]"
-            	+ " WHERE [account] =:account"
-            	, nativeQuery = true)
-    int GetUserAccountByAccount(@Param("account") String account);
-    
-    //取得當前管理員人數
-    @Query(value = "SELECT COUNT(*)"
-            	+ " FROM [user_info]"
-            	+ " WHERE [user_level] = 0"
-            	, nativeQuery = true)
-    int GetAdminUserCount();
+	@Query(value = "SELECT COUNT(*)"
+				+ " FROM [user_info]"
+				+ " WHERE [account] =:account"
+				, nativeQuery = true)
+	int GetUserAccountByAccount(@Param("account") String account);
+	
+	//取得當前管理員人數
+	@Query(value = "SELECT COUNT(*)"
+				+ " FROM [user_info]"
+				+ " WHERE [user_level] = 0"
+				, nativeQuery = true)
+	int GetAdminUserCount();
 }

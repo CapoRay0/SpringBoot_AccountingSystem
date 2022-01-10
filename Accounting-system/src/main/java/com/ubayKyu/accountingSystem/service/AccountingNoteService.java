@@ -48,18 +48,18 @@ public class AccountingNoteService {
 	}
 	//分別取得收入及支出的加總(全部)
 	public int getAccountingNoteAmountSum(String userid, Integer actType) {
-        Integer sum = repository.GetAccountingNoteAmountSum(userid, actType);
-        if(sum == null)
-        	sum = 0;
-        return sum;
-    }
+		Integer sum = repository.GetAccountingNoteAmountSum(userid, actType);
+		if(sum == null)
+			sum = 0;
+		return sum;
+	}
 	//分別取得收入及支出的加總(本月)
 	public int getAccountingNoteAmountSumThisMonth(String userid, Integer actType) {
-        Integer sum = repository.GetAccountingNoteAmountSumThisMonth(userid, actType);
-        if(sum == null)
-        	sum = 0;
-        return sum;
-    }
+		Integer sum = repository.GetAccountingNoteAmountSumThisMonth(userid, actType);
+		if(sum == null)
+			sum = 0;
+		return sum;
+	}
 	
 	/*-------------------------AccountingDetail.html-------------------------*/
 	
@@ -70,10 +70,10 @@ public class AccountingNoteService {
 	//新增、編輯流水帳，並回傳AccID
 	public Integer saveAccountingNote(AccountingNote acc) {
 		repository.save(acc);
-        if(acc.getAccID() == null) { //新增模式
-            List<AccountingNote> accList = repository.GetAccountingNoteByUserID(acc.getUserID());
-            return accList.get(accList.size()).getAccID(); //回傳當前登入者的最後一筆AccID >> 剛新增出來的
-        }
-        return acc.getAccID(); //回傳自己的AccID
-    }
+		if(acc.getAccID() == null) { //新增模式
+			List<AccountingNote> accList = repository.GetAccountingNoteByUserID(acc.getUserID());
+			return accList.get(accList.size()).getAccID(); //回傳當前登入者的最後一筆AccID >> 剛新增出來的
+		}
+		return acc.getAccID(); //回傳自己的AccID
+	}
 }

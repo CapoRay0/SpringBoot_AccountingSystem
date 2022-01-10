@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/Layout.html}">
 <head>
-    
+	
 	<meta charset="UTF-8">
 	<title>UserDetail</title>
 	
 	<script th:inline="javascript">
 		// 前端通過JS獲取Request.QueryString() 參考網頁：https://www.itread01.com/article/1474950736.html
-	    function getArgs(strParame) { //抓Request.QueryString用
-	        var args = new Object();
-	        var query = location.search.substring(1); // Get query string
-	        var pairs = query.split("&"); // Break at ampersand
-	        for (var i = 0; i < pairs.length; i++) {
-	            var pos = pairs[i].indexOf('='); // Look for "name=value"
-	            if (pos == -1) continue; // If not found, skip
-	            var argname = pairs[i].substring(0, pos); // Extract the name
-	            var value = pairs[i].substring(pos + 1); // Extract the value
-	            //var value = pairs[i].substring(pos + 1, pairs[i].length); // Extract the value
-	            value = decodeURIComponent(value); // Decode it, if needed
-	            args[argname] = value; // Store as a property
-	        }
-	        return args[strParame]; // Return the object
-	    }
+		function getArgs(strParame) { //抓Request.QueryString用
+			var args = new Object();
+			var query = location.search.substring(1); // Get query string
+			var pairs = query.split("&"); // Break at ampersand
+			for (var i = 0; i < pairs.length; i++) {
+				var pos = pairs[i].indexOf('='); // Look for "name=value"
+				if (pos == -1) continue; // If not found, skip
+				var argname = pairs[i].substring(0, pos); // Extract the name
+				var value = pairs[i].substring(pos + 1); // Extract the value
+				//var value = pairs[i].substring(pos + 1, pairs[i].length); // Extract the value
+				value = decodeURIComponent(value); // Decode it, if needed
+				args[argname] = value; // Store as a property
+			}
+			return args[strParame]; // Return the object
+		}
 		
 		$(function () {
 			//新增模式 >> 可填入 >> textbox
@@ -51,52 +51,52 @@
 		<img th:src="@{/arrow.png}" width="16" height="16">
 		會員管理
 		<br /><br />
-		 
+		
 		<form method="post" action="" id="form1">
-		 	<table>
-		 	 	<tr valign="top">
-				 	<td>帳號&emsp;&emsp;&emsp;</td>
+			<table>
+				<tr valign="top">
+					<td>帳號&emsp;&emsp;&emsp;</td>
 					<td>
-				 		<div class="EditMode">[[${account}]]</div>
-				 		<div class="AddMode"><input type="text" id="txtAccount" name="txtAccount" style="width:300px" th:value="${account}" MaxLength="20" placeholder="請輸入帳號" required /></div>
-				 		<br />
-				 	</td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>姓名&emsp;&emsp;&emsp;</td>
-				 	<td><input type="text" id="txtName" name="txtName" style="width:300px" th:value="${name}" placeholder="請輸入姓名" required ><br /><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>Email&emsp;&emsp;&emsp;</td>
-				 	<td><input type="email" id="txtEmail" name="txtEmail" style="width:300px" th:value="${email}" placeholder="請輸入Email" required ><br /><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>等級&emsp;&emsp;&emsp;</td>
-				 	<td>
-				 		<select id="ddlUserLevel" name="ddlUserLevel">
-				 	 	<option value="1">一般會員</option>
-					 	<option value="0">管理者</option>
-				 		</select>
-				 		<br /><br />
-				 	</td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td><div class="EditMode">建立時間&emsp;&emsp;&emsp;</div></td>
-				 	<td><div class="EditMode">[[${createTime}]]</div><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td><div class="EditMode">修改時間&emsp;&emsp;&emsp;</div></td>
-				 	<td><div class="EditMode">[[${editTime}]]</div><br /></td>
+						<div class="EditMode">[[${account}]]</div>
+						<div class="AddMode"><input type="text" id="txtAccount" name="txtAccount" style="width:300px" th:value="${account}" MaxLength="20" placeholder="請輸入帳號" required /></div>
+						<br />
+					</td>
 				</tr>
-		 	</table>
-		 	<input type="hidden" name="hiddenCreateDate" id="hiddenCreateDate" th:value="${createTime}" />
-		 
-		 	<br /><br />
-		 	<input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />&emsp;&emsp;
-		 
-		 	<a th:href="@{/UserList}">
-		 	<input type="button" class="btn btn-outline-dark" name="btnCancel" value="Cancel" id="btnCancel" />
-		 	</a>
+				<tr valign="top">
+					<td>姓名&emsp;&emsp;&emsp;</td>
+					<td><input type="text" id="txtName" name="txtName" style="width:300px" th:value="${name}" placeholder="請輸入姓名" required ><br /><br /></td>
+				</tr>
+				<tr valign="top">
+					<td>Email&emsp;&emsp;&emsp;</td>
+					<td><input type="email" id="txtEmail" name="txtEmail" style="width:300px" th:value="${email}" placeholder="請輸入Email" required ><br /><br /></td>
+				</tr>
+				<tr valign="top">
+					<td>等級&emsp;&emsp;&emsp;</td>
+					<td>
+						<select id="ddlUserLevel" name="ddlUserLevel">
+						<option value="1">一般會員</option>
+						<option value="0">管理者</option>
+						</select>
+						<br /><br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<td><div class="EditMode">建立時間&emsp;&emsp;&emsp;</div></td>
+					<td><div class="EditMode">[[${createTime}]]</div><br /></td>
+				</tr>
+				<tr valign="top">
+					<td><div class="EditMode">修改時間&emsp;&emsp;&emsp;</div></td>
+					<td><div class="EditMode">[[${editTime}]]</div><br /></td>
+				</tr>
+			</table>
+			<input type="hidden" name="hiddenCreateDate" id="hiddenCreateDate" th:value="${createTime}" />
+		
+			<br /><br />
+			<input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />&emsp;&emsp;
+		
+			<a th:href="@{/UserList}">
+			<input type="button" class="btn btn-outline-dark" name="btnCancel" value="Cancel" id="btnCancel" />
+			</a>
 		</form>
 	</div>
 </body>

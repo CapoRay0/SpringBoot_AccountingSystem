@@ -6,13 +6,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 
 @Service
 public class WriteTextService {
 	
 //	@Value("${username}")
-//    String username;
+//	String username;
 
 	public void writeToText(String messageString) throws IOException {
 		
@@ -20,9 +19,9 @@ public class WriteTextService {
 		//File file = new File(path.getAbsolutePath(),"static/Log.log"); //C:\Users\Admin\git\SpringBoot_AccountingSystem\Accounting-system\target\classes\static\Log.log
 		
 		String path = System.getProperty("user.dir");//當前專案路徑
-        path += "/Log.log";
+		path += "/Log.log";
 		
-//		String path = "C:\\Logs\\Log.log";
+		//String path = "C:\\Logs\\Log.log";
 		File file = new File(path);
 		if (!file.exists()) {
 			file.getParentFile().mkdirs();
@@ -37,10 +36,10 @@ public class WriteTextService {
 		bw.close();
 		fw.close();
 
-//	    // read
-//	    FileReader fr = new FileReader(file);
-//	    BufferedReader br = new BufferedReader(fr);
-//	    String str = br.readLine();
+		//// read
+		//FileReader fr = new FileReader(file);
+		//BufferedReader br = new BufferedReader(fr);
+		//String str = br.readLine();
 
 	}
 }

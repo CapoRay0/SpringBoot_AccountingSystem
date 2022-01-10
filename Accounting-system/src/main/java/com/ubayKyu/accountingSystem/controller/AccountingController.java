@@ -63,8 +63,8 @@ public class AccountingController {
 	// AccountingList.html Controller Post >> Delete
 	@PostMapping("/AccountingList")
 	public String accountingListDel(Model model,
-									@RequestParam(value ="ckbDelete", required = false) Integer[] accIDsForDel,
-									RedirectAttributes redirectAttrs) {
+				@RequestParam(value ="ckbDelete", required = false) Integer[] accIDsForDel,
+				RedirectAttributes redirectAttrs) {
 		
 		if (!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -85,7 +85,7 @@ public class AccountingController {
 	// AccountingDetail.html Controller Get
 	@GetMapping("/AccountingDetail")
 	public String accountingDetailPage(Model model,
-			 						   @RequestParam(value="accID", required = false) Integer accID) {
+				@RequestParam(value="accID", required = false) Integer accID) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -116,15 +116,15 @@ public class AccountingController {
 	//AaccountingDetail.html Controller Post >> CreateOrUpdate
 	@PostMapping("/AccountingDetail")
 	public String accountingDetailCreateOrUpdate(Model model,
-												 @RequestParam(value="accID", required = false) Integer accID, // Url
-												 @RequestParam(value="ddlActType", required = false) Integer ddltype,
-												 @RequestParam(value="ddlCategoryType", required = false) String ddlCategory,
-												 @RequestParam(value="txtAmount", required = false) String txtAmount,
-												 @RequestParam(value="txtCaption", required = false) String txtCaption,
-												 @RequestParam(value="txtBody", required = false) String txtBody,
-												 @RequestParam(value="hiddenDate", required = false) String hiddenDateTime,
-												 RedirectAttributes redirectAttrs
-												 ) {
+				@RequestParam(value="accID", required = false) Integer accID, // Url
+				@RequestParam(value="ddlActType", required = false) Integer ddltype,
+				@RequestParam(value="ddlCategoryType", required = false) String ddlCategory,
+				@RequestParam(value="txtAmount", required = false) String txtAmount,
+				@RequestParam(value="txtCaption", required = false) String txtCaption,
+				@RequestParam(value="txtBody", required = false) String txtBody,
+				@RequestParam(value="hiddenDate", required = false) String hiddenDateTime,
+				RedirectAttributes redirectAttrs
+				) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -141,7 +141,7 @@ public class AccountingController {
 			message = "輸入金額不可超過一千萬\r\n";
 		
 		if(txtCaption.isEmpty() || txtCaption == null)
-        	message += "標題不可為空\r\n";
+			message += "標題不可為空\r\n";
 		
 		if(!message.isEmpty()) {
 			redirectAttrs.addFlashAttribute("message", message);
@@ -178,5 +178,4 @@ public class AccountingController {
 		
 		return "redirect:/AccountingDetail?accID=" + newAccID;
 	}
-	
 }

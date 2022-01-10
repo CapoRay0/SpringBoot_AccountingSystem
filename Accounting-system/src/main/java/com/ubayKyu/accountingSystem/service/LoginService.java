@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
 
 @Service
-public class LoginService
-{
+public class LoginService {
 	@Autowired
 	HttpSession session;
 	

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/Layout.html}">
 <head>
-    
+	
 	<meta charset="UTF-8">
 	<title>AccountingDetail</title>
 	
@@ -16,7 +16,7 @@
 			var ddlCT = /*[[${ddlCategoryType}]]*/ "";
 			if(ddlAT != null){ 
 				$("#ddlActType").val(ddlAT); // 指定頁面出現後會顯示在哪一個選項
-			} 
+			}
 			if(ddlCT != null){ 
 				$("#ddlCategoryType").val(ddlCT);
 			}
@@ -26,48 +26,48 @@
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
-		 
+		
 		<h3>流水帳管理</h3>
 		<a href="/AccountingList">流水帳紀錄</a>
 		<img th:src="@{/arrow.png}" width="16" height="16">
 		流水帳管理
 		<br /><br />
-		 
-		<form method="post" action="" id="form1">
-		 	<table>
-			 	<tr valign="top">
-				 	<td>收 / 支&emsp;&emsp;&emsp;</td>
-				 	<td>
-				 		<select id="ddlActType" name="ddlActType">
-				 	 	<option value="1">收入</option>
-					 	<option value="0">支出</option>
-				 		</select><br /><br />
-				 	</td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>分類&emsp;&emsp;&emsp;</td>
-				 	<td>
-				 		<select id="ddlCategoryType" name="ddlCategoryType">
-				 	 	<option value="">未分類</option>
-				 	 	<option th:each="Category:${CategoryNameList}" th:value="${Category.getCategoryID()}">[[${Category.getCaption()}]]</option>
-				 		</select><br /><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>金額&emsp;&emsp;&emsp;</td>
-				 	<td><input type="number" id="txtAmount" name="txtAmount" th:value="${amount}" style="width:300px" min="1" max="10000000" placeholder="請輸入金額(一至一千萬)" required ><br /><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-				 	<td>標題&emsp;&emsp;&emsp;</td>
-				 	<td><input type="text" id="txtCaption" name="txtCaption" th:value="${caption}" style="width:300px" MaxLength="20" placeholder="請輸入標題(最多20字)" required ><br /><br /></td>
-			 	</tr>
-			 	<tr valign="top">
-			 		<td>備註&emsp;&emsp;&emsp;</td>
+		
+		<form method="post" action="">
+			<table>
+				<tr valign="top">
+					<td>收 / 支&emsp;&emsp;&emsp;</td>
+					<td>
+						<select id="ddlActType" name="ddlActType">
+						<option value="1">收入</option>
+						<option value="0">支出</option>
+						</select><br /><br />
+					</td>
+				</tr>
+				<tr valign="top">
+					<td>分類&emsp;&emsp;&emsp;</td>
+					<td>
+						<select id="ddlCategoryType" name="ddlCategoryType">
+						<option value="">未分類</option>
+						<option th:each="Category:${CategoryNameList}" th:value="${Category.getCategoryID()}">[[${Category.getCaption()}]]</option>
+						</select><br /><br /></td>
+				</tr>
+				<tr valign="top">
+					<td>金額&emsp;&emsp;&emsp;</td>
+					<td><input type="number" id="txtAmount" name="txtAmount" th:value="${amount}" style="width:300px" min="1" max="10000000" placeholder="請輸入金額(一至一千萬)" required ><br /><br /></td>
+				</tr>
+				<tr valign="top">
+					<td>標題&emsp;&emsp;&emsp;</td>
+					<td><input type="text" id="txtCaption" name="txtCaption" th:value="${caption}" style="width:300px" MaxLength="20" placeholder="請輸入標題(最多20字)" required ><br /><br /></td>
+				</tr>
+				<tr valign="top">
+					<td>備註&emsp;&emsp;&emsp;</td>
 					<td><textarea id="txtBody" name="txtBody" th:text="${body}" rows="4" cols="50" style="width:300px" placeholder="請輸入備註" ></textarea></td>
-			 	</tr>
-		 	</table>
-		 	<input type="hidden" name="hiddenDate" id="hiddenDate" th:value="${hiddenDateTime}" />
-		 	<br /><br />
-		 	<input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />
+				</tr>
+			</table>
+			<input type="hidden" name="hiddenDate" id="hiddenDate" th:value="${hiddenDateTime}" />
+			<br /><br />
+			<input type="submit" class="btn btn-outline-dark" name="btnSave" value="Save" id="btnSave" />
 		</form>
 	</div>
 </body>

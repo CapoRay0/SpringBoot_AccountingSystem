@@ -45,19 +45,19 @@ public class CategoryService {
 	}
 	//檢查標題是否存在，編輯模式下可以維持不變，但禁止與其他Caption相同
 	public boolean IsCategoryCaptionExist(String userid, String txtCaption, String categoryID) {
-        Integer captionFormDB = repository.IsCategoryCaptionExistFindByCaptionAndUserID(userid, txtCaption);
-        if(captionFormDB > 0 && categoryID != null) { // 編輯模式時
-        	Optional<Category> categoryForEdit = repository.findById(categoryID);
-        	if (categoryForEdit.get().getCaption().equals(txtCaption)) 
-    			return false; // 標題沒變，且沒有與其他標題重複
-    		else
-    			return true; // 重複了，跳警告
-        }
-        else if(captionFormDB == 0) // 新增模式時
-        	return false; // 沒有重複
-        else
-            return true; // 重複了，跳警告
-    }
+		Integer captionFormDB = repository.IsCategoryCaptionExistFindByCaptionAndUserID(userid, txtCaption);
+		if(captionFormDB > 0 && categoryID != null) { // 編輯模式時
+			Optional<Category> categoryForEdit = repository.findById(categoryID);
+			if (categoryForEdit.get().getCaption().equals(txtCaption)) 
+				return false; // 標題沒變，且沒有與其他標題重複
+			else
+				return true; // 重複了，跳警告
+		}
+		else if(captionFormDB == 0) // 新增模式時
+			return false; // 沒有重複
+		else
+			return true; // 重複了，跳警告
+	}
 	//新增分類
 	public String AddCategory(String userID, String txtCaption, String txtBody) {
 		Category newCategory = new Category();

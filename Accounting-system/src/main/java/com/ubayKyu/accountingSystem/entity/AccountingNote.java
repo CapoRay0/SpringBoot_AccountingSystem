@@ -9,37 +9,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "AccountingNote")
 public class AccountingNote {
-	
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="AccID", nullable=false, columnDefinition="int")
-    private Integer AccID;
-    
-    @Column(name="UserID", nullable=false, columnDefinition="uniqueidentifier")
-    private String UserID;
-    
-    @Column(name="Caption", nullable=true, columnDefinition="nvarchar(100)")
-    private String Caption;
-    
-    @Column(name="Amount", nullable=false, columnDefinition="int")
-    private Integer Amount;
-    
-    @Column(name="ActType", nullable=false, columnDefinition="int")
-    private Integer ActType;
-    
-    @Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
-    private LocalDateTime CreateDate;
-    
-    @Column(name="Body", nullable=true, columnDefinition="nvarchar(500)")
-    private String Body;
-    
-    @Column(name="CategoryID", nullable=true, columnDefinition="uniqueidentifier")
-    private String CategoryID;
 
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "AccID", nullable = false, columnDefinition = "int")
+	private Integer AccID;
+
+	@Column(name = "UserID", nullable = false, columnDefinition = "uniqueidentifier")
+	private String UserID;
+
+	@Column(name = "Caption", nullable = true, columnDefinition = "nvarchar(100)")
+	private String Caption;
+
+	@Column(name = "Amount", nullable = false, columnDefinition = "int")
+	private Integer Amount;
+
+	@Column(name = "ActType", nullable = false, columnDefinition = "int")
+	private Integer ActType;
+
+	@Column(name = "CreateDate", nullable = false, columnDefinition = "datetime default getdate()")
+	private LocalDateTime CreateDate;
+
+	@Column(name = "Body", nullable = true, columnDefinition = "nvarchar(500)")
+	private String Body;
+
+	@Column(name = "CategoryID", nullable = true, columnDefinition = "uniqueidentifier")
+	private String CategoryID;
+
 	public Integer getAccID() {
 		return AccID;
 	}
@@ -110,5 +109,4 @@ public class AccountingNote {
 				+ ", ActType=" + ActType + ", CreateDate=" + CreateDate + ", Body=" + Body + ", CategoryID="
 				+ CategoryID + "]";
 	}
-    
 }

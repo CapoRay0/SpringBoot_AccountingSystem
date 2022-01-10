@@ -46,13 +46,13 @@ public class DefaultController {
 		if(AccountingNoteService.getLastDate() != null) //如果create_date有資料
 			lastDate = FormatService.FormatDateTime(AccountingNoteService.getLastDate()); //丟 LocalDateTime 進去，回傳 Format 後的 String
 		
-        Integer accountCount = AccountingNoteService.getAccountCount(); //記帳數量
+		Integer accountCount = AccountingNoteService.getAccountCount(); //記帳數量
 		List<UserInfo> UserInfo = UserInfoService.getUserInfos(); //會員數
 		
-        model.addAttribute("firstAccRecordTime", firstDate);
-        model.addAttribute("lastAccRecordTime", lastDate);
-        model.addAttribute("recordCount", accountCount);
-        model.addAttribute("memberCount", UserInfo.size());
+		model.addAttribute("firstAccRecordTime", firstDate);
+		model.addAttribute("lastAccRecordTime", lastDate);
+		model.addAttribute("recordCount", accountCount);
+		model.addAttribute("memberCount", UserInfo.size());
 		return "Default";
 	}
 	

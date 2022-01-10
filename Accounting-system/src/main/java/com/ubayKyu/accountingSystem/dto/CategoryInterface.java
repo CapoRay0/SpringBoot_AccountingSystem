@@ -4,13 +4,13 @@ public interface CategoryInterface {
 
 	String getcategoryid();
 
-    String getbody();
+	String getbody();
 
-    String getcaption();
+	String getcaption();
 
-    String getcreate_date();
+	String getcreate_date();
 
-    String getuserid();
+	String getuserid();
 
-    Integer getcount();
+	Integer getcount();
 }

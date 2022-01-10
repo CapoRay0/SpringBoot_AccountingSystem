@@ -11,32 +11,32 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "UserInfo")
 public class UserInfo {
-	
-	@Id @Column(name="UserID", nullable=false, columnDefinition="uniqueidentifier")
-	private String UserID;
-	
-	@Column(name="Account", nullable=false, columnDefinition="varchar(50)")
-	private String Account;
-	
-	@Column(name="PWD", nullable=false, columnDefinition="varchar(50)")
-	private String PWD;
-	
-	@Column(name="Name", nullable=false, columnDefinition="nvarchar(50)")
-	private String Name;
-	
-	@Column(name="Email", nullable=false, columnDefinition="nvarchar(100)")
-	private String Email;
-	
-	@Column(name="UserLevel", nullable=false, columnDefinition="int")
-	private Integer UserLevel;
-	
-	@Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
-	private LocalDateTime CreateDate;
-	
-	@Column(name="EditDate", nullable=true, columnDefinition="datetime")
-    private LocalDateTime EditDate;
 
-	
+	@Id
+	@Column(name = "UserID", nullable = false, columnDefinition = "uniqueidentifier")
+	private String UserID;
+
+	@Column(name = "Account", nullable = false, columnDefinition = "varchar(50)")
+	private String Account;
+
+	@Column(name = "PWD", nullable = false, columnDefinition = "varchar(50)")
+	private String PWD;
+
+	@Column(name = "Name", nullable = false, columnDefinition = "nvarchar(50)")
+	private String Name;
+
+	@Column(name = "Email", nullable = false, columnDefinition = "nvarchar(100)")
+	private String Email;
+
+	@Column(name = "UserLevel", nullable = false, columnDefinition = "int")
+	private Integer UserLevel;
+
+	@Column(name = "CreateDate", nullable = false, columnDefinition = "datetime default getdate()")
+	private LocalDateTime CreateDate;
+
+	@Column(name = "EditDate", nullable = true, columnDefinition = "datetime")
+	private LocalDateTime EditDate;
+
 	public String getUserID() {
 		return UserID;
 	}
@@ -106,5 +106,4 @@ public class UserInfo {
 		return "UserInfo [UserID=" + UserID + ", Account=" + Account + ", PWD=" + PWD + ", Name=" + Name + ", Email="
 				+ Email + ", UserLevel=" + UserLevel + ", CreateDate=" + CreateDate + ", EditDate=" + EditDate + "]";
 	}
-	
 }

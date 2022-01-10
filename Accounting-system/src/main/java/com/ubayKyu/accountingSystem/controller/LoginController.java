@@ -25,7 +25,7 @@ public class LoginController
 	@GetMapping("/Login")
 	public String loginPage(Model model) {
 		if(LoginService.CheckLoginSession(session))
-	        return "redirect:/UserProfile";
+			return "redirect:/UserProfile";
 		else
 			return "Login";
 	}
@@ -33,20 +33,20 @@ public class LoginController
 	//將輸入值帶入，呼叫service層的方法與資料庫比對
 	@RequestMapping("userLogin")
 	public String getLogin(Model model, 
-						   @RequestParam("account") String account, 
-						   @RequestParam("pwd") String pwd, 
-						   RedirectAttributes redirectAttrs) {
+				@RequestParam("account") String account, 
+				@RequestParam("pwd") String pwd, 
+				RedirectAttributes redirectAttrs) {
 		
-		 boolean boolLogin=loginService.TryLogin(account, pwd);
-		 
-		 if(boolLogin == true)
-		 {
-			 return "redirect:/UserProfile"; //重新導向到指定的網址
-		 }
-		 else
-		 {
-			 redirectAttrs.addFlashAttribute("message","登入失敗，請檢查帳號及密碼是否正確");
-			 return "redirect:/Login"; //重新導向到指定的網址
-		 }
-	 }
+		boolean boolLogin=loginService.TryLogin(account, pwd);
+		
+		if(boolLogin == true)
+		{
+			return "redirect:/UserProfile"; //重新導向到指定的網址
+		}
+		else
+		{
+			redirectAttrs.addFlashAttribute("message","登入失敗，請檢查帳號及密碼是否正確");
+			return "redirect:/Login"; //重新導向到指定的網址
+		}
+	}
 }

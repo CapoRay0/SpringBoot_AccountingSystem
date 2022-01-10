@@ -60,32 +60,32 @@ public class UserInfoService {
 	
 	//取得個人資訊以進行編輯
 	public Optional<UserInfoInterface> getUserInfoInterfaceByUserID(String userID) {
-        return repository.GetUserInfoInterfaceByUserID(userID);
-    }
+		return repository.GetUserInfoInterfaceByUserID(userID);
+	}
 	//檢查帳號有無重複
 	public boolean IsAccountExist(String account) {
-        if (repository.GetUserAccountByAccount(account) == 0)
-            return false;
-        else
-            return true;
-    }
+		if (repository.GetUserAccountByAccount(account) == 0)
+			return false;
+		else
+			return true;
+	}
 	//新增、編輯使用者
 	public void SaveUserInfo(UserInfo user, String userID, String txtAccount, String txtName, String txtEmail, Integer ddlUserLevel) {
-        user.setUserID(userID);
-        user.setAccount(txtAccount);
-        user.setEmail(txtEmail);
-        user.setName(txtName);
-        user.setPWD("12345678");
-        user.setUserLevel(ddlUserLevel);
-        repository.save(user);
-    }
+		user.setUserID(userID);
+		user.setAccount(txtAccount);
+		user.setEmail(txtEmail);
+		user.setName(txtName);
+		user.setPWD("12345678");
+		user.setUserLevel(ddlUserLevel);
+		repository.save(user);
+	}
 	//檢查此使用者是否為管理員及管理員人數是否低於一人
-    public boolean AdminUserLevelCheck(String userID)
-    {
-        Optional<UserInfo> user = repository.findById(userID);
-        if(user.get().getUserLevel() == 0 && repository.GetAdminUserCount() <= 1)
-            return true;
-        else 
-            return false;
-    }
+	public boolean AdminUserLevelCheck(String userID)
+	{
+		Optional<UserInfo> user = repository.findById(userID);
+		if(user.get().getUserLevel() == 0 && repository.GetAdminUserCount() <= 1)
+			return true;
+		else 
+			return false;
+	}
 }

@@ -19,15 +19,14 @@
 	</style>
 	
 	<script th:inline="javascript">
-        var message = /*[[${message}]]*/ "";
-        if(message != null)
-        alert(message);
+		var message = /*[[${message}]]*/ "";
+		if(message != null)
+		alert(message);
 	</script>
 	
 </head>
 <body>
-	<form method="post" action="#" th:action="@{userLogin}" id="form1">
-	
+	<form method="post" action="#" th:action="@{userLogin}">
 		<div id="body">
 			<table>
 				<tr valign="bottom">

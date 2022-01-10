@@ -41,7 +41,7 @@ public class UserController {
 	// UserList.html Controller Get
 	@GetMapping("/UserList")
 	public String userListPage(Model model,
-							   RedirectAttributes redirectAttrs) {
+				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -64,8 +64,8 @@ public class UserController {
 	// UserList.html Controller Post >> Delete
 	@PostMapping("/UserList")
 	public String userListDel(Model model,
-							  @RequestParam(value ="ckbDelete", required = false) String[] userIDsForDel,
-							  RedirectAttributes redirectAttrs) {
+				@RequestParam(value ="ckbDelete", required = false) String[] userIDsForDel,
+				RedirectAttributes redirectAttrs) {
 
 		if (!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -117,8 +117,8 @@ public class UserController {
 	// UserDetail.html Controller Get
 	@GetMapping("/UserDetail")
 	public String userDetailPage(Model model,
-								 @RequestParam(value = "userID", required = false) String userID,
-								 RedirectAttributes redirectAttrs) {
+				@RequestParam(value = "userID", required = false) String userID,
+				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -140,12 +140,12 @@ public class UserController {
 		//編輯模式 >> 帶出個人資訊內容
 		if( userID != null) {
 			Optional<UserInfoInterface> userInfoForEdit = UserInfoService.getUserInfoInterfaceByUserID(userID);
-	        model.addAttribute("account", userInfoForEdit.get().getaccount());
-	        model.addAttribute("name", userInfoForEdit.get().getname());
-	        model.addAttribute("email", userInfoForEdit.get().getemail());
-	        model.addAttribute("userLevel", userInfoForEdit.get().getuser_level());
-	        model.addAttribute("createTime", userInfoForEdit.get().getcreate_date());
-	        model.addAttribute("editTime", userInfoForEdit.get().getedit_date());
+			model.addAttribute("account", userInfoForEdit.get().getaccount());
+			model.addAttribute("name", userInfoForEdit.get().getname());
+			model.addAttribute("email", userInfoForEdit.get().getemail());
+			model.addAttribute("userLevel", userInfoForEdit.get().getuser_level());
+			model.addAttribute("createTime", userInfoForEdit.get().getcreate_date());
+			model.addAttribute("editTime", userInfoForEdit.get().getedit_date());
 		}
 		
 		return "UserDetail";	
@@ -154,77 +154,76 @@ public class UserController {
 	// UserDetail.html Controller Post >> CreateOrUpdate
 	@PostMapping("/UserDetail")
 	public String userDetailCreateOrUpdate(Model model,
-										   @RequestParam(value = "userID", required = false) String userID,
-										   @RequestParam(value = "txtAccount", required = false) String txtAccount,
-										   @RequestParam(value = "txtName", required = false) String txtName,
-										   @RequestParam(value = "txtEmail", required = false) String txtEmail,
-										   @RequestParam(value = "ddlUserLevel", required = false) Integer ddlUserLevel,
-										   @RequestParam(value = "hiddenCreateDate", required = false) String hiddenCreateDate,
-										   RedirectAttributes redirectAttrs) {
+				@RequestParam(value = "userID", required = false) String userID,
+				@RequestParam(value = "txtAccount", required = false) String txtAccount,
+				@RequestParam(value = "txtName", required = false) String txtName,
+				@RequestParam(value = "txtEmail", required = false) String txtEmail,
+				@RequestParam(value = "ddlUserLevel", required = false) Integer ddlUserLevel,
+				@RequestParam(value = "hiddenCreateDate", required = false) String hiddenCreateDate,
+				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
-        if(txtAccount.isEmpty() || txtAccount == null)
-            message += "帳號不可為空\r\n";
-        
-        if(txtName.isEmpty() || txtName == null)
-            message += "姓名不可為空\r\n";
-        
-        if(txtEmail.isEmpty() || txtEmail == null)
-            message += "Email不可為空\r\n";
-        
-        //新增模式時
-        if(userID == null && UserInfoService.IsAccountExist(txtAccount)) //檢查是否重複
-            message += "此帳號已被使用\r\n";
-        
-        //編輯模式時
-        if(userID != null && ddlUserLevel == 1 && UserInfoService.AdminUserLevelCheck(userID)) //權限降級時檢查管理員人數
-            message += "管理員人數不能低於一人\r\n";
-        
-        //自己降級
-        UserInfo userFromSession = (UserInfo)session.getAttribute("UserLoginInfo");
+		if(txtAccount.isEmpty() || txtAccount == null)
+			message += "帳號不可為空\r\n";
+		
+		if(txtName.isEmpty() || txtName == null)
+			message += "姓名不可為空\r\n";
+		
+		if(txtEmail.isEmpty() || txtEmail == null)
+			message += "Email不可為空\r\n";
+		
+		//新增模式時
+		if(userID == null && UserInfoService.IsAccountExist(txtAccount)) //檢查是否重複
+			message += "此帳號已被使用\r\n";
+		
+		//編輯模式時
+		if(userID != null && ddlUserLevel == 1 && UserInfoService.AdminUserLevelCheck(userID)) //權限降級時檢查管理員人數
+			message += "管理員人數不能低於一人\r\n";
+		
+		//自己降級
+		UserInfo userFromSession = (UserInfo)session.getAttribute("UserLoginInfo");
 		String userIDFromSession = userFromSession.getUserID();
 		if(userID != null && userID.equals(userIDFromSession) && ddlUserLevel == 1)
 			session.setAttribute("AdminToUser", true);
-        
-        if(!message.isEmpty()) {
-        	redirectAttrs.addFlashAttribute("message", message);
-            if(userID == null)
-            	return "redirect:/UserDetail";
-            else
-            	return "redirect:/UserDetail?userID=" + userID;
-        }
-        
-        //新增或編輯使用者
-        UserInfo UserInfo = new UserInfo();
-        if(userID == null) {
-        	userID = UUID.randomUUID().toString();
-            UserInfo.setCreateDate(LocalDateTime.now());
-            message = "新增成功";
-        }
-        else {
-            //需先將從前端hidden抓到的CreateDate格式轉成yyyy/MM/dd HH:mm:ss
-        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        	UserInfo.setCreateDate(LocalDateTime.parse(hiddenCreateDate, formatter));
-            UserInfo.setEditDate(LocalDateTime.now());
-            message = "編輯成功";
-        }
-        UserInfoService.SaveUserInfo(UserInfo, userID, txtAccount, txtName, txtEmail, ddlUserLevel);
-        
-        //取得登入者資訊
-      	UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
-        if(user.getUserID().equals(userID)) //編輯模式下更新Session
-        {
-            UserInfo NewUserInfoToSession = UserInfoService.findByUserID(userID).get();
-            session.setAttribute("UserLoginInfo", NewUserInfoToSession);
-        }
 		
-        redirectAttrs.addFlashAttribute("message", message);
-        return "redirect:/UserDetail?userID=" + userID;
-        
+		if(!message.isEmpty()) {
+			redirectAttrs.addFlashAttribute("message", message);
+			if(userID == null)
+				return "redirect:/UserDetail";
+			else
+				return "redirect:/UserDetail?userID=" + userID;
+		}
+		
+		//新增或編輯使用者
+		UserInfo UserInfo = new UserInfo();
+		if(userID == null) {
+			userID = UUID.randomUUID().toString();
+			UserInfo.setCreateDate(LocalDateTime.now());
+			message = "新增成功";
+		}
+		else {
+			//需先將從前端hidden抓到的CreateDate格式轉成yyyy/MM/dd HH:mm:ss
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			UserInfo.setCreateDate(LocalDateTime.parse(hiddenCreateDate, formatter));
+			UserInfo.setEditDate(LocalDateTime.now());
+			message = "編輯成功";
+		}
+		UserInfoService.SaveUserInfo(UserInfo, userID, txtAccount, txtName, txtEmail, ddlUserLevel);
+		
+		//取得登入者資訊
+		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
+		if(user.getUserID().equals(userID)) //編輯模式下更新Session
+		{
+			UserInfo NewUserInfoToSession = UserInfoService.findByUserID(userID).get();
+			session.setAttribute("UserLoginInfo", NewUserInfoToSession);
+		}
+		
+		redirectAttrs.addFlashAttribute("message", message);
+		return "redirect:/UserDetail?userID=" + userID;
+		
 	}
-	
 }

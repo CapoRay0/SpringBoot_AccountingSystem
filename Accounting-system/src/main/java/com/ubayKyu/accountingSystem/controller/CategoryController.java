@@ -50,9 +50,9 @@ public class CategoryController {
 	
 	//CategoryList.html Controller Post >> Delete
 	@PostMapping("/CategoryList")
-    public String CategoryListDel(Model model, 
-    							  @RequestParam(value ="ckbDelete", required = false) String[] categoryIDsForDel,
-    							  RedirectAttributes redirectAttrs) {
+	public String CategoryListDel(Model model, 
+				@RequestParam(value ="ckbDelete", required = false) String[] categoryIDsForDel,
+				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
 			return "redirect:/Login";
@@ -74,17 +74,17 @@ public class CategoryController {
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
 		return "redirect:/CategoryList";
-    }
+	}
 	
 	/*--------------------------CategoryDetail.html--------------------------*/
 	
 	//CategoryDetail.html Controller Get
 	@GetMapping("/CategoryDetail")
 	public String categoryDetailPage(Model model, 
-									 @RequestParam(value="categoryID", required = false) String categoryID) {
+				@RequestParam(value="categoryID", required = false) String categoryID) {
 		
 		if(!LoginService.CheckLoginSession(session))
-	    	return "redirect:/Login";
+			return "redirect:/Login";
 		
 		//編輯模式 >> 帶出標題與備註內容
 		if(categoryID != null) {
@@ -94,46 +94,46 @@ public class CategoryController {
 				model.addAttribute("body", categoryForEdit.get().getBody());
 		}
 		
-	    return "CategoryDetail";
+		return "CategoryDetail";
 	}
 
 	//CategoryDetail.html Controller Post >> CreateOrUpdate
 	@PostMapping("/CategoryDetail")
 	public String categoryDetailCreateOrUpdate(Model model, 
-								   //HttpServletRequest request, 
-									 @RequestParam(value="categoryID", required = false) String categoryID, 
-									 @RequestParam(value="txtCaption", required = false) String txtCaption, 
-									 @RequestParam(value="txtBody", required = false) String txtBody,
-									 RedirectAttributes redirectAttrs) {
+				//HttpServletRequest request, 
+				@RequestParam(value="categoryID", required = false) String categoryID, 
+				@RequestParam(value="txtCaption", required = false) String txtCaption, 
+				@RequestParam(value="txtBody", required = false) String txtBody,
+				RedirectAttributes redirectAttrs) {
 		
-        if(!LoginService.CheckLoginSession(session))
-        	return "redirect:/Login";
-        
-//		直接從網址上抓下來的方法 >> HttpServletRequest
-//		String categoryID = request.getParameter("categoryID");
+		if(!LoginService.CheckLoginSession(session))
+			return "redirect:/Login";
 		
-        //取得登入者的UserID
-        UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
+		//直接從網址上抓下來的方法 >> HttpServletRequest
+		//String categoryID = request.getParameter("categoryID");
+		
+		//取得登入者的UserID
+		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		String userID = user.getUserID();
 		
-        //前、後台同時進行輸入檢查
-        String message = "";
-        if(txtCaption.isEmpty() || txtCaption == null)
-        	message += "標題不可為空\r\n";
-        
-        if(CategoryService.IsCategoryCaptionExist(userID, txtCaption, categoryID)) //檢查標題有無重複
-        	message += "此分類標題已經存在，請更換標題內容\r\n";
-        
-        if(!message.isEmpty()) {
-        	redirectAttrs.addFlashAttribute("message", message);
-        	if(categoryID == null)
-        		return "redirect:/CategoryDetail"; //新增
-            else
-              	return "redirect:/CategoryDetail?categoryID=" + categoryID;  //編輯
-        }
-        
-        //若無重複才進行新增或編輯
-        if (categoryID == null) //新增模式
+		//前、後台同時進行輸入檢查
+		String message = "";
+		if(txtCaption.isEmpty() || txtCaption == null)
+			message += "標題不可為空\r\n";
+		
+		if(CategoryService.IsCategoryCaptionExist(userID, txtCaption, categoryID)) //檢查標題有無重複
+			message += "此分類標題已經存在，請更換標題內容\r\n";
+		
+		if(!message.isEmpty()) {
+			redirectAttrs.addFlashAttribute("message", message);
+			if(categoryID == null)
+				return "redirect:/CategoryDetail"; //新增
+			else
+				return "redirect:/CategoryDetail?categoryID=" + categoryID;  //編輯
+		}
+		
+		//若無重複才進行新增或編輯
+		if (categoryID == null) //新增模式
 		{
 			categoryID = CategoryService.AddCategory(userID, txtCaption, txtBody);
 			message = "新增成功";
@@ -143,8 +143,8 @@ public class CategoryController {
 			CategoryService.UpdateCategory(categoryID, txtCaption, txtBody);
 			message = "編輯成功";
 		}
-        
-        redirectAttrs.addFlashAttribute("message", message);
-        return "redirect:/CategoryDetail?categoryID=" + categoryID;
+		
+		redirectAttrs.addFlashAttribute("message", message);
+		return "redirect:/CategoryDetail?categoryID=" + categoryID;
 	}
 }

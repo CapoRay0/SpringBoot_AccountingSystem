@@ -17,8 +17,8 @@
 		#layoutContent {margin-left: 70px;}
 		th {border: 1px solid black;}
 		.myTable {border: 1px solid black;}
-	   	.myTable tr:nth-child(even) {background: #EFF3FB}
-	    .myTable tr:nth-child(odd) {background: white}
+		.myTable tr:nth-child(even) {background: #EFF3FB}
+		.myTable tr:nth-child(odd) {background: white}
 	</style>
 	
 	<script> // 使其無法返回瀏覽器的上一頁
@@ -34,18 +34,18 @@
 	
 	<script th:inline="javascript">
 		//javascript natural templates
-        var message = /*[[${message}]]*/ "";
-        if(message != null)
-        	alert(message); // Alert警告提示訊息
-        
-        $(function () { // 用Session來判斷目前登入身分為使用者/管理者
-	 		var level = "[[${session.UserLoginInfo.getUserLevel()}]]";
-	 		if(level == 0)
-	 			document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/QrlPpw.png";
-	 		else if(level == 1){
-	 			$("#divManager").hide();
-	 			document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/9Nz7Jm.png";
-	 		}
+		var message = /*[[${message}]]*/ "";
+	if(message != null)
+			alert(message); // Alert警告提示訊息
+		
+		$(function () { // 用Session來判斷目前登入身分為使用者/管理者
+			var level = "[[${session.UserLoginInfo.getUserLevel()}]]";
+			if(level == 0)
+				document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/QrlPpw.png";
+			else if(level == 1){
+				$("#divManager").hide();
+				document.getElementById('person').src = "https://upload.cc/i1/2021/12/08/9Nz7Jm.png";
+			}
 		});
 	</script>
 
@@ -60,39 +60,39 @@
 					<h2>&nbsp;&nbsp;&nbsp;<strong>流水帳管理系統</strong></h2>
 					
 					<br /><br />
-				     <div id="divManager" >
-				     	&emsp;&emsp;&emsp;
-				     	<img th:src="@{/folder.png}" width="32" height="32">&nbsp;管理者後台<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+					<div id="divManager" >
+						&emsp;&emsp;&emsp;
+						<img th:src="@{/folder.png}" width="32" height="32">&nbsp;管理者後台<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
 						<img th:src="@{/file.png}" width="24" height="24">&nbsp;<a href="/UserList">會員管理</a>
-				     </div>
-					 
-					 &emsp;&emsp;&emsp;
-				     <img th:src="@{/folder.png}" width="32" height="32">&nbsp;後台管理<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
-					 <img th:src="@{/file.png}" width="24" height="24">&nbsp;<a href="/UserProfile">個人資訊</a>
+					</div>
+					
+					&emsp;&emsp;&emsp;
+					<img th:src="@{/folder.png}" width="32" height="32">&nbsp;後台管理<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+					<img th:src="@{/file.png}" width="24" height="24">&nbsp;<a href="/UserProfile">個人資訊</a>
 						
 					<br />&emsp;&emsp;&emsp;
-				 	<img th:src="@{/folder.png}" width="32" height="32">&nbsp;流水帳紀錄<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
+					<img th:src="@{/folder.png}" width="32" height="32">&nbsp;流水帳紀錄<br>&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
 					<img th:src="@{/file.png}" width="24" height="24">&nbsp;<a href="/AccountingList">流水帳管理</a>
 					<br />&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;
 					<img th:src="@{/file.png}" width="24" height="24">&nbsp;<a href="/CategoryList">流水帳分類管理</a>
 				</td>
-				    
+				
 				<td height="50px" width="1000px">
 					<nav class="navbar navbar-light" style="background-color: #e3f2fd">
 						<div class="container-fluid">
 						
 							<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-	      						<span class="navbar-toggler-icon"></span>
-	    					</button>
-	    					
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							
 							<form class="d-flex">
-        						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50%; margin-top: 10px; display: inline-block; vertical-align: middle">
-						        
-                           		<a href="/btnLogout">
-                           			<img width="45" height="45" id="person">
-                           		</a>
-                           		
-       						</form>
+								<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50%; margin-top: 10px; display: inline-block; vertical-align: middle">
+								
+								<a href="/btnLogout">
+									<img width="45" height="45" id="person">
+								</a>
+								
+							</form>
 						</div>
 					</nav>
 				</td>

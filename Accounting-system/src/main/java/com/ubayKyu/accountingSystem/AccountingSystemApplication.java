@@ -9,5 +9,4 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 	public static void main(String[] args) {
 		SpringApplication.run(AccountingSystemApplication.class, args);
 	}
-
 }

@@ -7,24 +7,24 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "Category")
 public class Category {
-	
-	@Id @Column(name="CategoryID", nullable=false, columnDefinition="uniqueidentifier")
-    private String CategoryID;
-    
-	@Column(name="UserID", nullable=false, columnDefinition="uniqueidentifier")
-    private String UserID;
-	
-    @Column(name="Caption", nullable=false, columnDefinition="nvarchar(100)")
-    private String Caption;
-    
-    @Column(name="Body", nullable=true, columnDefinition="nvarchar(500)")
-    private String Body;
 
-	@Column(name="CreateDate", nullable=false, columnDefinition="datetime default getdate()")
+	@Id
+	@Column(name = "CategoryID", nullable = false, columnDefinition = "uniqueidentifier")
+	private String CategoryID;
+
+	@Column(name = "UserID", nullable = false, columnDefinition = "uniqueidentifier")
+	private String UserID;
+
+	@Column(name = "Caption", nullable = false, columnDefinition = "nvarchar(100)")
+	private String Caption;
+
+	@Column(name = "Body", nullable = true, columnDefinition = "nvarchar(500)")
+	private String Body;
+
+	@Column(name = "CreateDate", nullable = false, columnDefinition = "datetime default getdate()")
 	private LocalDateTime CreateDate;
 
 	public String getCategoryID() {
@@ -72,5 +72,4 @@ public class Category {
 		return "Category [CategoryID=" + CategoryID + ", UserID=" + UserID + ", Caption=" + Caption + ", Body=" + Body
 				+ ", CreateDate=" + CreateDate + "]";
 	}
-	
 }

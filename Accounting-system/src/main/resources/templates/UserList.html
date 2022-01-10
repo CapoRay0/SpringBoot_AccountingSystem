@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/Layout.html}">
 <head>
-    
+	
 	<meta charset="UTF-8">
 	<title>UserList</title>
 	
 	<script> //js => TablePage換頁功能
-		 $(function () { 
-		     $("#tbUserInfo").tablepage($("#pager"), 10);
-		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
-		 });
+		$(function () { 
+			$("#tbUserInfo").tablepage($("#pager"), 10);
+			//$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		});
 	</script>
 	
 </head>
@@ -24,7 +24,7 @@
 		<img th:src="@{/arrow.png}" width="16" height="16">
 		會員管理
 		<br /><br />
-			 
+			
 		<form method="post" action="#" th:action="@{/UserList}" id="form1">
 			&nbsp;&nbsp;
 			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
@@ -32,7 +32,7 @@
 			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel" 
 			onclick="return confirm('您確定要刪除已選取項目嗎?')"/>
 			<br /><br />
-			 
+			
 			<table class="myTable" border="1" cellpadding="6" id="tbUserInfo"
 				style="color: #333333; border-collapse: collapse;">
 				<tr style="color: White; background-color: #507CD1; font-weight: bold;">

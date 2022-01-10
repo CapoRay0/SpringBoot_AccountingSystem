@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/Layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/Layout.html}">
 <head>
-    
+	
 	<meta charset="UTF-8">
 	<title>CategoryList</title>
 	
 	<script> //js => TablePage換頁功能
-		 $(function () { 
-		     $("#tbCategory").tablepage($("#pager"), 10);
-		     //$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
-		 });
+		$(function () { 
+			$("#tbCategory").tablepage($("#pager"), 10);
+			//$(table的id).tablepage($(span的id), 每頁顯示幾筆資料);
+		});
 	</script>
-	 
+	
 </head>
 <body>
 	<div layout:fragment="content" class="text-left">
 		
 		<h3>流水帳分類管理</h3>
-<!-- 	<a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a> -->
+	<!--<a th:href="@{/CategoryList(id=${session.UserLoginInfo.getUserID()})}">流水帳紀錄</a> -->
 		<a href="/CategoryList">流水帳紀錄</a>
 		<img th:src="@{/arrow.png}" width="16" height="16">
 		流水帳分類管理
 		<br /><br />
 		
-		<form method="post" action="#" th:action="@{/CategoryList}" id="form1">
+		<form method="post" action="#" th:action="@{/CategoryList}">
 			&nbsp;&nbsp;
 			<input type="button" class="btn btn-outline-dark" name="btnAdd" value="Add" id="btnAdd" 
 			onclick="window.location.href='/CategoryDetail'"/>
-<!-- 		th:onclick="'window.location.href = \'' + @{/CategoryDetail} + '\''"/> -->
+		<!--th:onclick="'window.location.href = \'' + @{/CategoryDetail} + '\''"/> -->
 			&emsp;&emsp;
-			 
+			
 			<input type="submit" class="btn btn-outline-dark" name="btnDel" value="Del" id="btnDel"
 			onclick="return confirm('您確定要刪除已選取項目嗎?   (若流水帳數>0則無法被刪除)')"/>
-
+			
 			<br /><br />
-			 
+			
 			<table class="myTable" border="1" cellpadding="6" id="tbCategory"
 				style="color: #333333; border-collapse: collapse;">
 				<tr style="color: White; background-color: #507CD1; font-weight: bold;">

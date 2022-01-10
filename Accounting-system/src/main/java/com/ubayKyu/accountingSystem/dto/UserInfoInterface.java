@@ -4,15 +4,15 @@ public interface UserInfoInterface {
 
 	String getuserid();
 
-    String getaccount();
+	String getaccount();
 
-    String getcreate_date();
-    
-    String getedit_date();
+	String getcreate_date();
 
-    String getemail();
+	String getedit_date();
 
-    String getname();
+	String getemail();
 
-    Integer getuser_level();
+	String getname();
+
+	Integer getuser_level();
 }

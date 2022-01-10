@@ -32,43 +32,43 @@ public class UserProfileController {
 	public String UserProfilePage(Model model) {
 		
 		if(!LoginService.CheckLoginSession(session))
-        	return "redirect:/Login";
+			return "redirect:/Login";
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		String userID = user.getUserID();
 		
 		Optional<UserInfo> userInfoForEdit = UserInfoService.findByUserID(userID);
-        model.addAttribute("account", userInfoForEdit.get().getAccount());
-        model.addAttribute("name", userInfoForEdit.get().getName());
-        model.addAttribute("email", userInfoForEdit.get().getEmail());
-        
-        return "UserProfile";
+		model.addAttribute("account", userInfoForEdit.get().getAccount());
+		model.addAttribute("name", userInfoForEdit.get().getName());
+		model.addAttribute("email", userInfoForEdit.get().getEmail());
+		
+		return "UserProfile";
 	}
 	
 	// UserProfile.html Controller Post
 	@PostMapping("/UserProfile")
 	public String UserProfilePageUpdate(Model model,
-										@RequestParam(value="txtName", required = false) String txtName, 
-										@RequestParam(value="txtEmail", required = false) String txtEmail, 
-										RedirectAttributes redirectAttrs) {
+				@RequestParam(value="txtName", required = false) String txtName, 
+				@RequestParam(value="txtEmail", required = false) String txtEmail, 
+				RedirectAttributes redirectAttrs) {
 			
 		if(!LoginService.CheckLoginSession(session))
-	        return "redirect:/Login";
+			return "redirect:/Login";
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
 		if(txtName.isEmpty() || txtName == null)
-            message += "姓名不可為空\r\n";
+			message += "姓名不可為空\r\n";
 		
 		if(txtEmail.isEmpty() || txtEmail == null)
-            message += "Email不可為空\r\n";
+			message += "Email不可為空\r\n";
 		
 		if(!message.isEmpty())
-        {
-        	redirectAttrs.addFlashAttribute("message", message);
-            return "redirect:/UserProfile";
-        }
+		{
+			redirectAttrs.addFlashAttribute("message", message);
+			return "redirect:/UserProfile";
+		}
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -76,7 +76,7 @@ public class UserProfileController {
 
 		UserInfoService.UpdateUserProfile(userID, txtName, txtEmail);
 		redirectAttrs.addFlashAttribute("message", "個人資訊修改成功");
-	    
-	    return "redirect:/UserProfile";
+		
+		return "redirect:/UserProfile";
 	}
 }
