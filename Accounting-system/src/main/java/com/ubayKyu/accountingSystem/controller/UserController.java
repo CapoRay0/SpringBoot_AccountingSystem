@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.dto.UserInfoInterface;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
 import com.ubayKyu.accountingSystem.service.LoginService;
@@ -44,14 +45,14 @@ public class UserController {
 				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		Integer userLevel = user.getUserLevel();
 		if(userLevel > 0) {
 			redirectAttrs.addFlashAttribute("message", "您的權限不足，無法訪問該頁面");
-			return "redirect:/UserProfile";
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		}
 		
 		//於html使用th:each將UserInfo的List加入table中印出會員列表
@@ -68,7 +69,7 @@ public class UserController {
 				RedirectAttributes redirectAttrs) {
 
 		if (!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -82,7 +83,7 @@ public class UserController {
 			for(String eachUserID : userIDsForDel) {
 				
 				Optional<UserInfo> userInfoToDel = UserInfoService.findByUserID(eachUserID);
-				String name = userInfoToDel.get().getName();
+				String name = userInfoToDel.orElseThrow().getName();
 				
 				//寫入 Log.log 中 >> Accounting-system\Log.log
 				try {
@@ -103,13 +104,13 @@ public class UserController {
 			if(currentUserID.equals(selfIsDelete)) { //將自己登出
 				redirectAttrs.addFlashAttribute("message","已將此會員(選取之會員)及其流水帳、分類刪除，回到預設頁");
 				LoginService.RemoveLoginSession(session);
-				return "redirect:/Default";
+				return "redirect:" + UrlPath.URL_DEFAULT;
 			}
 			redirectAttrs.addFlashAttribute("message","已將選取之會員及其流水帳、分類刪除，剩餘 " + userInfoCount + " 位會員");
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
-		return "redirect:/UserList";
+		return "redirect:" + UrlPath.URL_USERLIST;
 	}
 	
 	/*----------------------------UserDetail.html----------------------------*/
@@ -121,7 +122,7 @@ public class UserController {
 				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -134,18 +135,18 @@ public class UserController {
 				redirectAttrs.addFlashAttribute("message", "已降級為一般會員\r\n");
 				session.setAttribute("AdminToUser", false);
 			}
-			return "redirect:/UserProfile";
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		}
 		
 		//編輯模式 >> 帶出個人資訊內容
 		if( userID != null) {
 			Optional<UserInfoInterface> userInfoForEdit = UserInfoService.getUserInfoInterfaceByUserID(userID);
-			model.addAttribute("account", userInfoForEdit.get().getaccount());
-			model.addAttribute("name", userInfoForEdit.get().getname());
-			model.addAttribute("email", userInfoForEdit.get().getemail());
-			model.addAttribute("userLevel", userInfoForEdit.get().getuser_level());
-			model.addAttribute("createTime", userInfoForEdit.get().getcreate_date());
-			model.addAttribute("editTime", userInfoForEdit.get().getedit_date());
+			model.addAttribute("account", userInfoForEdit.orElseThrow().getaccount());
+			model.addAttribute("name", userInfoForEdit.orElseThrow().getname());
+			model.addAttribute("email", userInfoForEdit.orElseThrow().getemail());
+			model.addAttribute("userLevel", userInfoForEdit.orElseThrow().getuser_level());
+			model.addAttribute("createTime", userInfoForEdit.orElseThrow().getcreate_date());
+			model.addAttribute("editTime", userInfoForEdit.orElseThrow().getedit_date());
 		}
 		
 		return "UserDetail";	
@@ -163,7 +164,7 @@ public class UserController {
 				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
@@ -193,9 +194,9 @@ public class UserController {
 		if(!message.isEmpty()) {
 			redirectAttrs.addFlashAttribute("message", message);
 			if(userID == null)
-				return "redirect:/UserDetail";
+				return "redirect:" + UrlPath.URL_USERDETAIL;
 			else
-				return "redirect:/UserDetail?userID=" + userID;
+				return "redirect:" + UrlPath.URL_USERDETAIL + "?userID=" + userID;
 		}
 		
 		//新增或編輯使用者
@@ -218,12 +219,12 @@ public class UserController {
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		if(user.getUserID().equals(userID)) //編輯模式下更新Session
 		{
-			UserInfo NewUserInfoToSession = UserInfoService.findByUserID(userID).get();
+			UserInfo NewUserInfoToSession = UserInfoService.findByUserID(userID).orElseThrow();
 			session.setAttribute("UserLoginInfo", NewUserInfoToSession);
 		}
 		
 		redirectAttrs.addFlashAttribute("message", message);
-		return "redirect:/UserDetail?userID=" + userID;
+		return "redirect:" + UrlPath.URL_USERDETAIL + "?userID=" + userID;
 		
 	}
 }

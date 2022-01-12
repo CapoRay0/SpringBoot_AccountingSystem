@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
 import com.ubayKyu.accountingSystem.service.FormatService;
 import com.ubayKyu.accountingSystem.service.LoginService;
@@ -61,7 +62,7 @@ public class DefaultController {
 	public String btnLogout(Model model, RedirectAttributes redirectAttrs) {
 		redirectAttrs.addFlashAttribute("message", "已成功登出，將您導回預設頁");
 		LoginService.RemoveLoginSession(session);
-		return "redirect:/Default";
+		return "redirect:" + UrlPath.URL_DEFAULT;
 	}
 	
 }

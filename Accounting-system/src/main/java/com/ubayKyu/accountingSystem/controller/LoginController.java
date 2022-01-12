@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.service.LoginService;
 
 @Controller
@@ -25,7 +26,7 @@ public class LoginController
 	@GetMapping("/Login")
 	public String loginPage(Model model) {
 		if(LoginService.CheckLoginSession(session))
-			return "redirect:/UserProfile";
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		else
 			return "Login";
 	}
@@ -41,12 +42,12 @@ public class LoginController
 		
 		if(boolLogin == true)
 		{
-			return "redirect:/UserProfile"; //重新導向到指定的網址
+			return "redirect:" + UrlPath.URL_USERPROFILE; //重新導向到指定的網址
 		}
 		else
 		{
 			redirectAttrs.addFlashAttribute("message","登入失敗，請檢查帳號及密碼是否正確");
-			return "redirect:/Login"; //重新導向到指定的網址
+			return "redirect:" + UrlPath.URL_LOGIN; //重新導向到指定的網址
 		}
 	}
 }

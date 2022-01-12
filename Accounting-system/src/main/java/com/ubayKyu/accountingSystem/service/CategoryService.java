@@ -46,17 +46,11 @@ public class CategoryService {
 	//檢查標題是否存在，編輯模式下可以維持不變，但禁止與其他Caption相同
 	public boolean IsCategoryCaptionExist(String userid, String txtCaption, String categoryID) {
 		Integer captionFormDB = repository.IsCategoryCaptionExistFindByCaptionAndUserID(userid, txtCaption);
-		if(captionFormDB > 0 && categoryID != null) { // 編輯模式時
+		if(captionFormDB > 0 && categoryID != null) { // 編輯模式
 			Optional<Category> categoryForEdit = repository.findById(categoryID);
-			if (categoryForEdit.get().getCaption().equals(txtCaption)) 
-				return false; // 標題沒變，且沒有與其他標題重複
-			else
-				return true; // 重複了，跳警告
+			return !(categoryForEdit.orElseThrow().getCaption().equals(txtCaption)); //重複則回傳true跳警告，沒有重複回傳false
 		}
-		else if(captionFormDB == 0) // 新增模式時
-			return false; // 沒有重複
-		else
-			return true; // 重複了，跳警告
+		return !(captionFormDB == 0); //新增模式，重複則回傳true跳警告，沒有重複回傳false
 	}
 	//新增分類
 	public String AddCategory(String userID, String txtCaption, String txtBody) {
@@ -74,9 +68,9 @@ public class CategoryService {
 	//編輯分類
 	public void UpdateCategory(String categoryID, String txtCaption, String txtBody) {
 		Optional<Category> categoryForEdit = repository.findById(categoryID);
-		categoryForEdit.get().setCaption(txtCaption); // 更新Caption
-		categoryForEdit.get().setBody(txtBody); // 更新Body
-		repository.save(categoryForEdit.get()); // 內建儲存語法(新增、更新都適用)
+		categoryForEdit.orElseThrow().setCaption(txtCaption); // 更新Caption
+		categoryForEdit.orElseThrow().setBody(txtBody); // 更新Body
+		repository.save(categoryForEdit.orElseThrow()); // 內建儲存語法(新增、更新都適用)
 	}
 	
 	/*------------------------AccountingDetail.html--------------------------*/

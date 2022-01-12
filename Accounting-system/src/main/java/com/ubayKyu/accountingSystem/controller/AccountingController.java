@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.dto.AccountingNoteInterface;
 import com.ubayKyu.accountingSystem.entity.AccountingNote;
 import com.ubayKyu.accountingSystem.entity.Category;
@@ -41,7 +42,7 @@ public class AccountingController {
 	public String accountingListPage(Model model) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者的UserID
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -67,7 +68,7 @@ public class AccountingController {
 				RedirectAttributes redirectAttrs) {
 		
 		if (!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		if(accIDsForDel != null) {
 			for(Integer eachAccountingNote : accIDsForDel) {
@@ -77,7 +78,7 @@ public class AccountingController {
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
-		return "redirect:/AccountingList";
+		return "redirect:" + UrlPath.URL_ACCOUNTINGLIST;
 	}
 	
 	/*-------------------------AccountingDetail.html-------------------------*/
@@ -88,7 +89,7 @@ public class AccountingController {
 				@RequestParam(value="accID", required = false) Integer accID) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者的UserID
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -101,13 +102,13 @@ public class AccountingController {
 		//編輯模式 >> 帶出收支、金額、標題與備註內容
 		if(accID != null) {
 			Optional<AccountingNote> accountingNoteForEdit = AccountingNoteService.findById(accID);
-			model.addAttribute("ddlActType", accountingNoteForEdit.get().getActType()); //透過jQuery傳至html
-			model.addAttribute("ddlCategoryType", accountingNoteForEdit.get().getCategoryID()); //透過jQuery傳至html
-			model.addAttribute("amount", accountingNoteForEdit.get().getAmount());
-			model.addAttribute("caption", accountingNoteForEdit.get().getCaption());
-			if(accountingNoteForEdit.get().getBody() != null)
-				model.addAttribute("body", accountingNoteForEdit.get().getBody());
-			model.addAttribute("hiddenDateTime", accountingNoteForEdit.get().getCreateDate()); //資料庫抓出日期放入前台hidden，讓Post時可以抓到
+			model.addAttribute("ddlActType", accountingNoteForEdit.orElseThrow().getActType()); //透過jQuery傳至html
+			model.addAttribute("ddlCategoryType", accountingNoteForEdit.orElseThrow().getCategoryID()); //透過jQuery傳至html
+			model.addAttribute("amount", accountingNoteForEdit.orElseThrow().getAmount());
+			model.addAttribute("caption", accountingNoteForEdit.orElseThrow().getCaption());
+			if(accountingNoteForEdit.orElseThrow().getBody() != null)
+				model.addAttribute("body", accountingNoteForEdit.orElseThrow().getBody());
+			model.addAttribute("hiddenDateTime", accountingNoteForEdit.orElseThrow().getCreateDate()); //資料庫抓出日期放入前台hidden，讓Post時可以抓到
 		}
 		
 		return "AccountingDetail";
@@ -127,7 +128,7 @@ public class AccountingController {
 				) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
@@ -146,9 +147,9 @@ public class AccountingController {
 		if(!message.isEmpty()) {
 			redirectAttrs.addFlashAttribute("message", message);
 			if(accID == null)
-				return "redirect:/AccountingDetail";
+				return "redirect:" + UrlPath.URL_ACCOUNTINGDETAIL;
 			else
-				return "redirect:/AccountingDetail?accID=" + accID;
+				return "redirect:" + UrlPath.URL_ACCOUNTINGDETAIL + "?accID=" + accID;
 		}
 		
 		//取得登入者的UserID
@@ -176,6 +177,6 @@ public class AccountingController {
 		String newAccID = AccountingNoteService.saveAccountingNote(newOrUpdateAcc).toString();
 		redirectAttrs.addFlashAttribute("message", message);
 		
-		return "redirect:/AccountingDetail?accID=" + newAccID;
+		return "redirect:" + UrlPath.URL_ACCOUNTINGDETAIL + "?accID=" + newAccID;
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.dto.CategoryInterface;
 import com.ubayKyu.accountingSystem.entity.Category;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
@@ -35,7 +36,7 @@ public class CategoryController {
 	public String categoryListPage(Model model) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者的UserID
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
@@ -55,7 +56,7 @@ public class CategoryController {
 				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		if(categoryIDsForDel != null) { //如果CheckBox有被勾選
 			String isDelete = "";
@@ -73,7 +74,7 @@ public class CategoryController {
 		}else
 			redirectAttrs.addFlashAttribute("message","未選取任何項目");
 		
-		return "redirect:/CategoryList";
+		return "redirect:" + UrlPath.URL_CATEGORYLIST;
 	}
 	
 	/*--------------------------CategoryDetail.html--------------------------*/
@@ -84,14 +85,14 @@ public class CategoryController {
 				@RequestParam(value="categoryID", required = false) String categoryID) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//編輯模式 >> 帶出標題與備註內容
 		if(categoryID != null) {
 			Optional<Category> categoryForEdit = CategoryService.findByCategoryID(categoryID);
-			model.addAttribute("caption", categoryForEdit.get().getCaption());
-			if(categoryForEdit.get().getBody() != null) 
-				model.addAttribute("body", categoryForEdit.get().getBody());
+			model.addAttribute("caption", categoryForEdit.orElseThrow().getCaption());
+			if(categoryForEdit.orElseThrow().getBody() != null) 
+				model.addAttribute("body", categoryForEdit.orElseThrow().getBody());
 		}
 		
 		return "CategoryDetail";
@@ -107,7 +108,7 @@ public class CategoryController {
 				RedirectAttributes redirectAttrs) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//直接從網址上抓下來的方法 >> HttpServletRequest
 		//String categoryID = request.getParameter("categoryID");
@@ -127,9 +128,9 @@ public class CategoryController {
 		if(!message.isEmpty()) {
 			redirectAttrs.addFlashAttribute("message", message);
 			if(categoryID == null)
-				return "redirect:/CategoryDetail"; //新增
+				return "redirect:" + UrlPath.URL_CATEGORYDETAIL; //新增
 			else
-				return "redirect:/CategoryDetail?categoryID=" + categoryID;  //編輯
+				return "redirect:" + UrlPath.URL_CATEGORYDETAIL + "?categoryID=" + categoryID;  //編輯
 		}
 		
 		//若無重複才進行新增或編輯
@@ -145,6 +146,6 @@ public class CategoryController {
 		}
 		
 		redirectAttrs.addFlashAttribute("message", message);
-		return "redirect:/CategoryDetail?categoryID=" + categoryID;
+		return "redirect:" + UrlPath.URL_CATEGORYDETAIL + "?categoryID=" + categoryID;
 	}
 }

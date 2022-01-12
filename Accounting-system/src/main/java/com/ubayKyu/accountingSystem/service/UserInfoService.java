@@ -39,9 +39,9 @@ public class UserInfoService {
 	//編輯個人資訊
 	public void UpdateUserProfile(String userID, String txtName, String txtEmail) {
 		Optional<UserInfo> userInfoForEdit = repository.findById(userID);
-		userInfoForEdit.get().setName(txtName); // 更新Name
-		userInfoForEdit.get().setEmail(txtEmail); // 更新Email
-		repository.save(userInfoForEdit.get()); // 內建儲存語法
+		userInfoForEdit.orElseThrow().setName(txtName); // 更新Name
+		userInfoForEdit.orElseThrow().setEmail(txtEmail); // 更新Email
+		repository.save(userInfoForEdit.orElseThrow()); // 內建儲存語法
 	}
 	
 	/*----------------------------UserList.html------------------------------*/
@@ -83,7 +83,7 @@ public class UserInfoService {
 	public boolean AdminUserLevelCheck(String userID)
 	{
 		Optional<UserInfo> user = repository.findById(userID);
-		if(user.get().getUserLevel() == 0 && repository.GetAdminUserCount() <= 1)
+		if(user.orElseThrow().getUserLevel() == 0 && repository.GetAdminUserCount() <= 1)
 			return true;
 		else 
 			return false;

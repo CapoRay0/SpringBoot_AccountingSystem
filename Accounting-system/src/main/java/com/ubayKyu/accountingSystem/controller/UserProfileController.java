@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ubayKyu.accountingSystem.Const.UrlPath;
 import com.ubayKyu.accountingSystem.entity.UserInfo;
 import com.ubayKyu.accountingSystem.service.LoginService;
 import com.ubayKyu.accountingSystem.service.UserInfoService;
@@ -32,16 +33,16 @@ public class UserProfileController {
 	public String UserProfilePage(Model model) {
 		
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//取得登入者資訊
 		UserInfo user = (UserInfo)session.getAttribute("UserLoginInfo");
 		String userID = user.getUserID();
 		
 		Optional<UserInfo> userInfoForEdit = UserInfoService.findByUserID(userID);
-		model.addAttribute("account", userInfoForEdit.get().getAccount());
-		model.addAttribute("name", userInfoForEdit.get().getName());
-		model.addAttribute("email", userInfoForEdit.get().getEmail());
+		model.addAttribute("account", userInfoForEdit.orElseThrow().getAccount());
+		model.addAttribute("name", userInfoForEdit.orElseThrow().getName());
+		model.addAttribute("email", userInfoForEdit.orElseThrow().getEmail());
 		
 		return "UserProfile";
 	}
@@ -54,7 +55,7 @@ public class UserProfileController {
 				RedirectAttributes redirectAttrs) {
 			
 		if(!LoginService.CheckLoginSession(session))
-			return "redirect:/Login";
+			return "redirect:" + UrlPath.URL_LOGIN;
 		
 		//前、後台同時進行輸入檢查
 		String message = "";
@@ -67,7 +68,7 @@ public class UserProfileController {
 		if(!message.isEmpty())
 		{
 			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/UserProfile";
+			return "redirect:" + UrlPath.URL_USERPROFILE;
 		}
 		
 		//取得登入者資訊
@@ -77,6 +78,6 @@ public class UserProfileController {
 		UserInfoService.UpdateUserProfile(userID, txtName, txtEmail);
 		redirectAttrs.addFlashAttribute("message", "個人資訊修改成功");
 		
-		return "redirect:/UserProfile";
+		return "redirect:" + UrlPath.URL_USERPROFILE;
 	}
 }
